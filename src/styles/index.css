@@ -15,3 +15,7 @@ code {
 .ant-layout-sider::-webkit-scrollbar {
   display: none;
 }
+
+.ant-layout-header {
+  background: #82ae46;
+}

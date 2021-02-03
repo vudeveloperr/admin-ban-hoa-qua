@@ -32,7 +32,7 @@ class Login extends React.Component {
 
   render() {
     return (
-        <div className="login-screen" style={{backgroundImage: 'url(../public/login-register.jpg)'}}>
+        <div className="login-screen" style={{backgroundImage: 'url(/login-register.jpg)'}}>
             <div className="login-container" style={{ textAlign: "center" }}>
                 <h1>Login</h1>
                 <Form
