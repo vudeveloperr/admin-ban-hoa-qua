@@ -8,6 +8,7 @@ const { Header, Sider, Content } = Layout;
 
 const ContentWrapper = styled.div`
     margin: 10px;
+    padding: 16px;
     background-color: #FFFFFF;
 `
 const HeaderWrapper = styled.div`

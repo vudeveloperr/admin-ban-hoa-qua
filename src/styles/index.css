@@ -19,3 +19,8 @@ code {
 .ant-layout-header {
   background: #82ae46;
 }
+
+.ant-table-thead > tr > th {
+  background: #82ae46 !important; 
+  color: #ffffff !important;
+}

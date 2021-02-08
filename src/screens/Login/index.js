@@ -1,78 +1,71 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import { Form, Input, Button } from 'antd';
-import {withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
+import styled from 'styled-components';
 
-// import qs from 'qs';
+const LoginWrapper = styled.div`
+  background-image: url("login-register.jpg");
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+`
+const FormWrapper = styled.div`
+  text-align: center;
+  background-color: rgba(255,255,255,0.5);
+  border-radius: 5px;
+  padding: 30px 30px;
+`
 
-const layout = {
-  wrapperCol: {
-    span: 24,
-  },
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 4,
-    span: 16,
-  },
-};
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { username: "", password: "" };
-  }
-
-  login(values){
-  }
 
   onFinish = (values) => {
-    this.login(values);
+
   }
 
   render() {
     return (
-        <div className="login-screen" style={{backgroundImage: 'url(/login-register.jpg)'}}>
-            <div className="login-container" style={{ textAlign: "center" }}>
-                <h1>Login</h1>
-                <Form
-                {...layout}
-                name="basic"
-                onFinish={this.onFinish}
-                style={{ margin: "auto" }}
-                >
-                <Form.Item
-                    name="username"
-                    rules={[
-                    {
-                        required: true,
-                        message: 'Please input your username!',
-                    },
-                    ]}
-                >
-                    <Input placeholder="Username" />
-                </Form.Item>
+      <LoginWrapper>
+        <FormWrapper>
+          <h1>Login</h1>
+          <Form
+            onFinish={this.onFinish}
+          >
+            <Form.Item
+              name="username"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your username!',
+                },
+              ]}
+            >
+              <Input placeholder="Username" />
+            </Form.Item>
 
-                <Form.Item
-                    name="password"
-                    rules={[
-                    {
-                        required: true,
-                        message: 'Please input your password!',
-                    },
-                    ]}
-                >
-                    <Input.Password placeholder="Password" />
-                </Form.Item>
+            <Form.Item
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input your password!',
+                },
+              ]}
+            >
+              <Input.Password placeholder="Password" />
+            </Form.Item>
 
-                <Form.Item {...tailLayout}>
-                    <Button type="primary" htmlType="submit">
-                    Submit
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Submit
                 </Button>
-                </Form.Item>
-                </Form>
-            </div>
-        </div>
+            </Form.Item>
+          </Form>
+        </FormWrapper>
+      </LoginWrapper>
     );
   }
 };
