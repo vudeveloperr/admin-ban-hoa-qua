@@ -1,7 +1,7 @@
-
+import CategoryRequest from './CategoryRequest'
 
 const requestMap = {
-
+    CategoryRequest,
 };
 
 const instances = {};

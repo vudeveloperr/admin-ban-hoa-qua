@@ -1,6 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Table, Form, Input, Modal } from 'antd';
 import styled from 'styled-components';
+import {connect} from 'react-redux';
+
+import actions from '../../redux/actions/category'
 
 const ButtonWrapper = styled.div`
     color: #1890ff;
@@ -12,9 +15,11 @@ const ButtonWrapper = styled.div`
 function Product(props) {
     const [modalVisble, setModalVisible] = useState(false)
 
-    const dataSource = [
+    const dataSource =[];
 
-    ];
+    useEffect(
+        props.fetchCategory
+    ,[])
 
     const columns = [
         {
@@ -80,4 +85,18 @@ function Product(props) {
     )
 }
 
-export default Product;
+const mapStateToProps = (state) => {
+    return{
+        category: state.category.category
+    }
+}   
+
+const mapDispatchToProps = (dispatch) => {
+    return{
+        fetchCategory: () => {
+            dispatch(actions.onFetchCategory())
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Product);

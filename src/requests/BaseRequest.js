@@ -1,9 +1,7 @@
-
-
 class BaseRequest {
     async get(url, params = {}) {
         try {
-            const response = await window.axios.get(`${this.version}/${url}`, { params });
+            const response = await window.axios.get(`${url}`, { params });
             return this._responseHandler(response);
         } catch (error) {
             this._errorHandler(error);
@@ -11,7 +9,7 @@ class BaseRequest {
     }
     async put(url, data = {}) {
         try {
-            const response = await window.axios.put(`${this.version}/${url}`, data);
+            const response = await window.axios.put(`${url}`, data);
             return this._responseHandler(response);
         } catch (error) {
             this._errorHandler(error);
@@ -20,7 +18,7 @@ class BaseRequest {
 
     async post(url, data = {}) {
         try {
-            const response = await window.axios.post(`${this.version}/${url}`, data);
+            const response = await window.axios.post(`${url}`, data);
             return this._responseHandler(response);
         } catch (error) {
             this._errorHandler(error);
@@ -29,7 +27,7 @@ class BaseRequest {
 
     async del(url, params = {}) {
         try {
-            const response = await window.axios.delete(`${this.version}/${url}`, params);
+            const response = await window.axios.delete(`${url}`, params);
             return this._responseHandler(response);
         } catch (error) {
             this._errorHandler(error);
@@ -39,7 +37,7 @@ class BaseRequest {
     async _responseHandler(response) {
         const { data } = response;
         return {
-            data: data.response_data,
+            data: data.data,
             error: data.error,
         } || {};
     }
@@ -51,3 +49,5 @@ class BaseRequest {
         throw err;
       }
 }
+
+export default BaseRequest;
