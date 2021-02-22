@@ -18,11 +18,11 @@ function* fetchProducts(action) {
     }
 }
 
-function* watchCategory() {
+function* watchProduct() {
     yield takeLatest(FETCH_PRODUCT, fetchProducts);
 
 }
 
 export default function* rootSaga() {
-    yield all([fork(watchCategory)]);
+    yield all([fork(watchProduct)]);
 }

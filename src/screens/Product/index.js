@@ -3,7 +3,9 @@ import { Table, Form, Input, Modal } from 'antd';
 import styled from 'styled-components';
 import {connect} from 'react-redux';
 
-import actions from '../../redux/actions/category'
+import productactions from '../../redux/actions/product'
+import categoryactions from '../../redux/actions/category'
+
 
 const ButtonWrapper = styled.div`
     color: #1890ff;
@@ -15,33 +17,46 @@ const ButtonWrapper = styled.div`
 function Product(props) {
     const [modalVisble, setModalVisible] = useState(false)
 
-    const dataSource =[];
-
     useEffect(
-        props.fetchCategory
+        props.fetchProducts
     ,[])
 
     const columns = [
         {
-
+            title: 'Image',
+            dataIndex: 'image',
+            render:  (text) => <img className="MuiAvatar-root MuiAvatar-circle jss1040" src={text} />,
+            key: 'image'
         },
         {
             title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
         },
         {
             title: 'Unit',
+            dataIndex: 'unit',
+            key: 'unit'
         },
         {
             title: 'Category',
+            dataIndex: 'category',
+            key: 'category',
         },
         {
             title: 'Price',
+            dataIndex: 'price',
+            key: 'price',
         },
         {
             title: 'Rate',
+            dataIndex: 'rate',
+            key: 'rate',
         },
         {
             title: 'Remaining',
+            dataIndex: 'remaining',
+            key: 'remaining',
         },
         {
             render: () => (
@@ -70,7 +85,7 @@ function Product(props) {
 
     return (
         <div>
-            <Table dataSource={dataSource} columns={columns} />
+            <Table dataSource={props.product} columns={columns} />
             <Modal
                 title="Edit Product"
                 visible={modalVisble}
@@ -87,14 +102,15 @@ function Product(props) {
 
 const mapStateToProps = (state) => {
     return{
-        category: state.category.category
+        category: state.category.category,
+        product: state.product.product,
     }
 }   
 
 const mapDispatchToProps = (dispatch) => {
     return{
-        fetchCategory: () => {
-            dispatch(actions.onFetchCategory())
+        fetchProducts: () => {
+            dispatch(productactions.onFetchProduct())
         }
     }
 }
