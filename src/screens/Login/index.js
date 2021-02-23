@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom'
 import styled from 'styled-components';
 
 const LoginWrapper = styled.div`
-  background-image: url("login-register.jpg");
+  background-image: url("urban-farmer-transporting-freshly-harvested-pumpkins-in-wheelbarrow-907717424-5c12a55346e0fb000121c123.jpg");
   background-size: cover;
   height: 100vh;
   display: flex;
