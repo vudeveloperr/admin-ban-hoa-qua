@@ -572,3 +572,11 @@ td, th {
 .jss960 {
     margin-left: 32px;
 }
+
+.import {
+    margin-right: 250px;
+}
+
+.btn-create-sale{
+    border-radius: 5px;
+}

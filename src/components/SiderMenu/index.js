@@ -13,6 +13,7 @@ function SiderMenu(props) {
            <Menu.Item key='/import'><Link to='/import'>Import</Link></Menu.Item>
            <Menu.Item key='/user-control'><Link to='/user-control'>User control</Link></Menu.Item>
            <Menu.Item key='/discounts'><Link to='/discounts'>Discounts</Link></Menu.Item>
+           <Menu.Item key='/statistic'><Link to='/statistic'>Statistic</Link></Menu.Item>
         </Menu>
     );
 }
