@@ -1,16 +1,23 @@
-import {LOGIN, LOGOUT} from './action_types';
+export const LOGIN = 'LOGIN'
+export const LOGIN_SUCCEED = 'LOGIN_SUCCEED'
+export const LOGIN_FAILED = 'LOGIN_FAILED'
+export const LOGOUT = 'LOGOUT'
 
 export default {
-    login: (data) => ({
+    onLogin: (data, callback) =>({
         type: LOGIN,
-        params:{
-            data,
-        }
+        data,
+        callback
     }),
-    logout: (data) => ({
-        type: LOGOUT,
-        params:{
-            data,
-        }
+    onLoginSucceed: (data) => ({
+        type: LOGIN_SUCCEED,
+        data,
+    }),
+    onLoginFailed: (err) => ({
+        type: LOGIN_FAILED,
+        err,
+    }),
+    onLogout: () => ({
+        type: LOGOUT
     })
 };

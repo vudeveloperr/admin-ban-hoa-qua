@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Checkbox } from 'antd';
+import { Table, Checkbox, Row, Col  } from 'antd';
 
 const dataSource = [
     {
@@ -92,6 +92,15 @@ export default function Discounts() {
     return (
         <div>
             Discounts
+            <hr/>
+            <div className="btn-discounts">
+                <Row className="">
+                    <Col span={21} className=''></Col>
+                    <Col span={3} className=''>
+                        <button className="btn-create-sale">CREATE SALE</button>
+                    </Col>
+                </Row> 
+            </div>
             <Table dataSource={dataSource} columns={columns} />
         </div>
     )

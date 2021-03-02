@@ -572,3 +572,7 @@ td, th {
 .jss960 {
     margin-left: 32px;
 }
+
+.btn-create-sale{
+    border-radius: 5px;
+}
