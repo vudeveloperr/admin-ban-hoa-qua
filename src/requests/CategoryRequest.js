@@ -4,7 +4,7 @@ const prefix = '/category'
  
 class CategoryRequest extends BaseRequest {
     fetchCategories() {
-        const url = `${prefix}`
+        const url = `${prefix}/`
         return this.get(url)
     }
 }
