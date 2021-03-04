@@ -18,7 +18,8 @@ function Product(props) {
     const [modalVisble, setModalVisible] = useState(false)
 
     useEffect(
-        props.fetchProducts
+        props.fetchProducts,
+        props.fetchCategory
     ,[])
 
     const columns = [
@@ -40,8 +41,9 @@ function Product(props) {
         },
         {
             title: 'Category',
-            dataIndex: 'category',
-            key: 'category',
+            dataIndex: 'category_id',
+            key: 'category_id',
+            // render: () => props.category_id.find((dataIndex) => {return dataIndex}).name
         },
         {
             title: 'Price',
@@ -49,9 +51,9 @@ function Product(props) {
             key: 'price',
         },
         {
-            title: 'Rate',
-            dataIndex: 'rate',
-            key: 'rate',
+            title: 'AVGRate',
+            dataIndex: 'rate_avg',
+            key: 'rate_avg',
         },
         {
             title: 'Remaining',
@@ -82,10 +84,9 @@ function Product(props) {
     }
 
 
-
     return (
         <div>
-            <Table dataSource={props.product} columns={columns} />
+            <Table dataSource={props.product} columns={columns}/>
             <Modal
                 title="Edit Product"
                 visible={modalVisble}
@@ -111,6 +112,9 @@ const mapDispatchToProps = (dispatch) => {
     return{
         fetchProducts: () => {
             dispatch(productactions.onFetchProduct())
+        },
+        fetchCategory: () => {
+            dispatch(categoryactions.onFetchCategory())
         }
     }
 }

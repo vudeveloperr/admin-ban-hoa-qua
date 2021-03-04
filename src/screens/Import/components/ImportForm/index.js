@@ -51,7 +51,7 @@ function ImportForm(props) {
                 <Button onClick={showModal}>Add Product</Button>
             </CenterWrapper>
             <Modal
-                title="Modal"
+                title="Add New Product"
                 visible={visible}
                 onCancel={hideModal}
             >

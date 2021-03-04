@@ -1,63 +1,41 @@
-import React from 'react'
-import { Table, Checkbox, Row, Col  } from 'antd';
+import { useState } from 'react'
+import { Table, Checkbox, Row, Col, Form, Input, Upload, Button, Modal, InputNumber  } from 'antd';
+import { UploadOutlined } from "@ant-design/icons";
+import styled from 'styled-components';
+const CenterWrapper = styled.div`
+  width: 100%;
+  text-align: center;
+`
+const Spacing = styled.div`
+  &>*{
+    margin-bottom: 10px;
+  }
+`
+
+
+const layout = {
+    labelCol: {
+        span: 8,
+    },
+    wrapperCol: {
+        span: 16,
+    },
+};
+
+const tailLayout = {
+    wrapperCol: {
+        offset: 8,
+        span: 16,
+    },
+};
 
 const dataSource = [
     {
         key: '1',
-        image: 'https://www.greendale.com//catalogimages/products/cornish_new_potatoes_c.jpg',
         name: 'Cornish New Potatoes (500g)',
         remaining: 32,
         description: 'Weight: 500g',
     },
-    {
-        key: '2',
-        image: 'https://www.greendale.com//catalogimages/products/courgettes_yellow.jpg',
-        name: 'Yellow Courgettes',
-        remaining: 42,
-        description: 'Typical weight 220g each',
-    },
-    {
-        key: '3',
-        image: 'https://www.greendale.com//catalogimages/products/potatoes.jpg',
-        name: 'Daisy Potatoes - 1kg',
-        remaining: 56,
-        description: 'Weight: 1kg',
-    },
-    {
-        key: '4',
-        image: 'https://www.greendale.com//catalogimages/products/maris_piper_potatoes_1.jpg',
-        name: 'Maris Piper Potatoes 1kg',
-        remaining: 11,
-        description: 'Weight: 1kg',
-    },
-    {
-        key: '5',
-        image: 'https://www.greendale.com//catalogimages/products/parsnips_1.jpg',
-        name: 'Parsnips 500g',
-        remaining: 8,
-        description: 'Weight: 500g',
-    },
-    {
-        key: '6',
-        image: 'https://www.greendale.com//catalogimages/products/ginger.jpg',
-        name: 'Ginger',
-        remaining: 15,
-        description: 'Weight: 100g',
-    },
-    {
-        key: '7',
-        image: 'https://www.greendale.com//catalogimages/products/IMG_0339.jpg',
-        name: 'Pre-Packed Radishes',
-        remaining: 9,
-        description: 'Weight: 150g',
-      },
-      {
-        key: '8',
-        image: 'https://www.greendale.com//catalogimages/products/swede.jpg',
-        name: 'Fresh Local Swede',
-        remaining: 12,
-        description: 'Typical weight 500g each',
-      },
 ];
 
 const columns = [
@@ -66,29 +44,31 @@ const columns = [
         render: () => <Checkbox></Checkbox>
     },
     {
-        title: 'Image',
-        render: (text) => <img className="MuiAvatar-root MuiAvatar-circle jss1040" src={text} />,
-        dataIndex: 'image',
-        key: 'image',
-
-    },
-    {
-        title: 'Name',
+        title: 'Name Sale Off Event',
         dataIndex: 'name',
         key: 'name',
     },
     {
-        title: 'Remaining',
-        dataIndex: 'remaining',
-        key: 'remaining',
+        title: 'Value',
+        dataIndex: 'value',
+        key: 'value',
     },
     {
-        title: 'Description',
-        dataIndex: 'description',
-        key: 'description',
+        title: 'Time',
+        dataIndex: 'lastupdate',
+        key: 'lastupdate',
     },
 ];
-export default function Discounts() {
+export default function Discounts(props) {
+    const [visible, setVisible] = useState(false);
+
+    const showModal = () => {
+        setVisible(true);
+    }
+
+    const hideModal = () => {
+        setVisible(false);
+    }
     return (
         <div>
             Discounts
@@ -97,9 +77,50 @@ export default function Discounts() {
                 <Row className="">
                     <Col span={21} className=''></Col>
                     <Col span={3} className=''>
-                        <button className="btn-create-sale">CREATE SALE</button>
+                    <CenterWrapper>
+                        <Button className="btn-create-sale" onClick={showModal}>CREATE SALE</Button>
+                    </CenterWrapper>
                     </Col>
                 </Row> 
+                <Spacing>
+                    
+                    <Modal
+                        title="Add New SaleOff Campaign"
+                        visible={visible}
+                        onCancel={hideModal}
+                    >
+                        <Form {...layout} name="control-ref">
+                            <Form.Item name="name" label="Name" rules={[{ required: true }]}>
+                                <Input />
+                            </Form.Item>
+                            <Form.Item name="importmoney" label="Import Money" rules={[{ required: true }]}>
+                                <Input />
+                            </Form.Item>
+                            <Form.Item name="price" label="Price on Page" rules={[{ required: true }]}>
+                                <Input />
+                            </Form.Item>
+                            <Form.Item name="unit" label="Unit" rules={[{ required: true }]}>
+                                <Input />
+                            </Form.Item>
+                            <Form.Item name="remaining" label="Quantity" >
+                                <InputNumber />
+                            </Form.Item>
+                            <Form.Item name="description" label="Description" rules={[{ required: true }]}>
+                                <Input />
+                            </Form.Item>
+                            <Form.Item label="Upload Image For Banner">
+                                <Upload {...props}>
+                                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                                </Upload>
+                            </Form.Item>
+                            <Form.Item {...tailLayout}>
+                                <Button type="primary" htmlType="submit">
+                                    Submit
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </Modal>
+                </Spacing>
             </div>
             <Table dataSource={dataSource} columns={columns} />
         </div>
