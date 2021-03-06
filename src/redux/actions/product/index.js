@@ -1,18 +1,18 @@
-export const FETCH_PRODUCT = 'FETCH_PRODUCT'
-export const FETCH_PRODUCT_SUCCEED = 'FETCH_PRODUCT_SUCCEED'
-export const FETCH_PRODUCT_FAILED = 'FETCH_PRODUCT_FAILED'
+export const FETCH_PRODUCTS = 'FETCH_PRODUCTS'
+export const FETCH_PRODUCTS_SUCCEED = 'FETCH_PRODUCTS_SUCCEED'
+export const FETCH_PRODUCTS_FAILED = 'FETCH_PRODUCTS_FAILED'
 
 
 export default {
-  onFetchProduct: () => ({
-    type: FETCH_PRODUCT,
+  onFetchProducts: () => ({
+    type: FETCH_PRODUCTS,
   }),
-  onFetchProductSucceed: (data) => ({
-    type: FETCH_PRODUCT_SUCCEED,
+  onFetchProductsSucceed: (data) => ({
+    type: FETCH_PRODUCTS_SUCCEED,
     data,
   }),
-  onFetchProductFailed: (err) => ({
-    type: FETCH_PRODUCT_FAILED,
+  onFetchProductsFailed: (err) => ({
+    type: FETCH_PRODUCTS_FAILED,
     err,
   }),
 };

@@ -1,117 +1,63 @@
-import { useState, useEffect } from 'react';
-import { Table, Form, Input, Modal } from 'antd';
-import styled from 'styled-components';
-import {connect} from 'react-redux';
-
+import React from 'react'
+import { connect } from 'react-redux'
+import { useEffect } from 'react';
+import { CustomPagination, Products } from './components';
 import productactions from '../../redux/actions/product'
 import categoryactions from '../../redux/actions/category'
 
-
-const ButtonWrapper = styled.div`
-    color: #1890ff;
-    &:hover{
-        cursor: pointer;
-    }
-`
-
 function Product(props) {
-    const [modalVisble, setModalVisible] = useState(false)
-
     useEffect(
-        props.fetchProducts,
-        props.fetchCategory
-    ,[])
+		() => {
+			props.fetchCategory()
+			props.fetchProducts({ size: 8 })
+		}
+		, [])
 
-    const columns = [
-        {
-            title: 'Image',
-            dataIndex: 'image',
-            render:  (text) => <img className="MuiAvatar-root MuiAvatar-circle jss1040" src={text} />,
-            key: 'image'
-        },
-        {
-            title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
-        },
-        {
-            title: 'Unit',
-            dataIndex: 'unit',
-            key: 'unit'
-        },
-        {
-            title: 'Category',
-            dataIndex: 'category_id',
-            key: 'category_id',
-            // render: () => props.category_id.find((dataIndex) => {return dataIndex}).name
-        },
-        {
-            title: 'Price',
-            dataIndex: 'price',
-            key: 'price',
-        },
-        {
-            title: 'AVGRate',
-            dataIndex: 'rate_avg',
-            key: 'rate_avg',
-        },
-        {
-            title: 'Remaining',
-            dataIndex: 'remaining',
-            key: 'remaining',
-        },
-        {
-            render: () => (
-                <ButtonWrapper
-                    onClick={editClick}
-                >
-                    Edit
-                </ButtonWrapper>
-            )
-        },
-    ];
+	// useEffect(() => {
+	// 	if (category === null) {
+	// 		props.fetchProducts({ size: 12 })
+	// 	}
+	// 	else {
+	// 		props.fetchProducts({ size: 12, cateid: category })
+	// 	}
+	// }, [category])
+    useEffect(() => {
+        props.fetchProducts({ size: 8 })
+    }, )
 
-    const editClick = () => {
-        setModalVisible(true);
-    }
-
-    const modalOk = () => {
-        setModalVisible(false);
-    }
-
-    const modalCancel = () => {
-        setModalVisible(false);
-    }
-
+	const onPageChange = (page, size) => {	
+		props.fetchProducts({ page: page, size: 8 })
+		
+	}
 
     return (
-        <div>
-            <Table dataSource={props.product} columns={columns}/>
-            <Modal
-                title="Edit Product"
-                visible={modalVisble}
-                onOk={modalOk}
-                onCancel={modalCancel}
-            >
-                <Form>
-
-                </Form>
-            </Modal>
-        </div>
+        <>
+            <section class="ftco-section">
+				<div class="container">
+					<Products
+						products={props.product}
+					/>
+					<CustomPagination
+						total={props.total_count}
+						onPageChange={onPageChange}
+					/>
+				</div>
+			</section>
+        </>
     )
 }
 
 const mapStateToProps = (state) => {
-    return{
+    return {
         category: state.category.category,
         product: state.product.product,
     }
-}   
+}
 
 const mapDispatchToProps = (dispatch) => {
-    return{
+    return {
         fetchProducts: () => {
-            dispatch(productactions.onFetchProduct())
+            dispatch(productactions.onFetchProducts())
         },
         fetchCategory: () => {
             dispatch(categoryactions.onFetchCategory())
@@ -119,4 +65,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Product);
+export default connect(mapStateToProps, mapDispatchToProps)(Product)
