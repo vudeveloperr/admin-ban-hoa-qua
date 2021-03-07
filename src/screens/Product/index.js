@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { useEffect } from 'react';
-import { CustomPagination, Products } from './components';
+import { Products } from './components';
 import productactions from '../../redux/actions/product'
 import categoryactions from '../../redux/actions/category'
 import { Pagination } from 'antd'
@@ -26,11 +26,6 @@ function Product(props) {
 		)
 	}
 
-	const onPageChange = (page, size) => {	
-		props.fetchProducts({ page: page, size: 8 })
-
-	}
-
     return (
         <>
             <section class="ftco-section">
@@ -40,11 +35,6 @@ function Product(props) {
 						fetchProducts={props.fetchProducts}
 						totalCount={props.total_count}
 					/>
-					{/* <CustomPagination
-						total={props.total_count}
-						onPageChange={onPageChange}
-					/> */}
-					
 				</div>
 			</section>
         </>

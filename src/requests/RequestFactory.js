@@ -2,11 +2,15 @@ import CategoryRequest from './CategoryRequest';
 import ProductRequest from './ProductRequest';
 import AdminRequest from './AdminRequest';
 import AccountRequest from './AccountRequests';
+import OrderRequest from './OrderRequest';
+
+
 const requestMap = {
     CategoryRequest,
     ProductRequest,
     AdminRequest,
     AccountRequest,
+    OrderRequest
 };
 
 const instances = {};
@@ -25,4 +29,6 @@ export default class RequestFactory {
         }
         return requestInstance;
     }
+
+    
 }

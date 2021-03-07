@@ -1,8 +1,9 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {Table, Modal} from 'antd';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import orderactions from '../../redux/actions/order'
+import moment from 'moment';
 
 const ButtonWrapper = styled.div`
     color: #1890ff;
@@ -16,59 +17,64 @@ function Order(props){
 
     ];
 
+    useEffect(
+		() => {
+			props.fetchOrders()
+            // props.acceptOrder()
+		}, [])
+    
+
     const columns = [
         {
-
+            title: "OrderId",
+            dataIndex: 'id',
         },
         {
-            title: "Customer's name ",
+            title: "CusName ",
+            dataIndex: 'name',
         },
         {
             title: 'Address',
+            dataIndex: 'address'
         },
         {
-            title: 'Total',
+            title: 'Time Order',
+            dataIndex: '',
+            render : (record)=>(
+                moment.unix(record.last_update).format('dddd, MMMM Do, YYYY h:mm:ss A')
+            )
         },
         {
             title: "Order's state",
+            dataIndex: 'current_status'
         },
         {
-            title: 'Remaining',
+            title: 'Phone',
+            dataIndex: 'number'
+        },
+        {
+            title: 'Require',
+            dataIndex: 'detail'
         },
         {
             render: () => (
                 <ButtonWrapper
                     onClick={detailClick}
                 >
-                    Detail
+                    Accept
                 </ButtonWrapper>
             )
         },
     ];
 
-    const detailClick = () => {
-        setModalVisible(true);
-    }
-
-    const modalOk = () => {
-        setModalVisible(false);
-    }
-
-    const modalCancel = () => {
-        setModalVisible(false);
+    const detailClick = (record) => {
+        // setModalVisible(true);
+        props.acceptOrder(record.id)
     }
 
     return(
         <div>
             <Table dataSource={props.order} columns={columns} />
-            <Modal
-                title="Edit Product"
-                visible={modalVisble}
-                onOk={modalOk}
-                onCancel={modalCancel}
-            >
-
-            </Modal>
         </div>
     );
 }
@@ -84,6 +90,9 @@ const mapDispatchToProps = (dispatch) => {
         fetchOrders: () => {
             dispatch(orderactions.onFetchOrders())
         },
+        acceptOrder: () => {
+            dispatch(orderactions.onUpdateOrder())
+        }
     }
 }
 

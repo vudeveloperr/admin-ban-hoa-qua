@@ -2,7 +2,7 @@ import {
     all, call, put,fork ,takeLatest,
 } from 'redux-saga/effects';
 
-import { FETCH_ORDERS } from '../actions/order';
+import { FETCH_ORDERS, UPDATE_ORDER } from '../actions/order';
 import actions from '../actions/order';
 import rf from '../../requests/RequestFactory';
 
@@ -20,8 +20,23 @@ function* fetchOrders(action) {
     }
 }
 
+function* acceptOrder(action) {
+    try {
+        const { data, error } = yield call(
+            (data) => rf.getRequest('OrderRequest').acceptOrder(data), action.data
+        );
+        if (error.code === 200) {
+            yield put(actions.onUpdateOrderSucceed({ data }));
+        }
+    } catch (err) {
+        console.log("=======", err)
+        yield put(actions.onUpdateOrderFailed(err));
+    }
+}
+
 function* watchOrder() {
     yield takeLatest(FETCH_ORDERS, fetchOrders);
+    yield takeLatest(UPDATE_ORDER, acceptOrder);
 }
 
 export default function* rootSaga() {
