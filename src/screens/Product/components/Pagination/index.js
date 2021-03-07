@@ -8,10 +8,12 @@ function CustomPagination(props) {
         <div class="row mt-5">
             <div class="col text-center">
                 <Pagination
-                    onChange={props.onPageChange}
+                    onChange={(page, pageSize) => {
+                        props.onPageChange((page-1)*pageSize, pageSize)
+                    }}
                     showSizeChanger={false}
                     defaultCurrent={1}
-                    pageSize={12}
+                    pageSize={10}
                     total={props.total}
                     hideOnSinglePage={true}
                 />

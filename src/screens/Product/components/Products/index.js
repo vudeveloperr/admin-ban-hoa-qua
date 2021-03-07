@@ -12,6 +12,8 @@ const ButtonWrapper = styled.div`
 
 function Products(props) {
     const [modalVisble, setModalVisible] = useState(false)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalCount, setTotalCount] = useState(0)
 
     const columns = [
         {
@@ -74,10 +76,23 @@ function Products(props) {
         setModalVisible(false);
     }
 
+    useEffect(() => {
+        setTotalCount(props.totalCount)
+    }, [props.totalCount])
+
 
     return (
         <div>
-            <Table dataSource={props.products} columns={columns}/>
+            <Table dataSource={props.products} columns={columns}
+                pagination={{
+                    current: currentPage,
+                    onChange: ((page, pageSize) => {
+                        props.fetchProducts({page, size: pageSize})
+                        setCurrentPage(page)
+                    }),
+                    total: totalCount
+                }}
+            />
             <Modal
                 title="Edit Product"
                 visible={modalVisble}

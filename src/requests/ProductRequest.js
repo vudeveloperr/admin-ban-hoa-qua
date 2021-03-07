@@ -3,8 +3,9 @@ import BaseRequest from './BaseRequest';
 const prefix = '/product'
 
 export default class ProductRequest extends BaseRequest {
-    fetchProducts(){
+    fetchProducts(params){
         const url = `${prefix}/list`;
-        return this.get(url); 
+        console.log("params", params)
+        return this.get(url, params); 
     }
 }
