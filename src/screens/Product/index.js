@@ -13,18 +13,6 @@ function Product(props) {
 		}
 		, [])
 
-	// useEffect(() => {
-	// 	if (category === null) {
-	// 		props.fetchProducts({ size: 12 })
-	// 	}
-	// 	else {
-	// 		props.fetchProducts({ size: 12, cateid: category })
-	// 	}
-	// }, [category])
-    useEffect(() => {
-        props.fetchProducts({ size: 8 })
-    }, )
-
 	const onPageChange = (page, size) => {	
 		props.fetchProducts({ page: page, size: 8 })
 		

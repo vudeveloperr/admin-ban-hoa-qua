@@ -1,23 +1,33 @@
 import { Avatar, Dropdown, Menu } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
+import {useHistory} from 'react-router-dom';
 
 
 const AvatarWrapper = styled.div`
     width: fit-content;
     float:right;
 `
-const menu = (
-    <Menu>
-        <Menu.Item>1</Menu.Item>
-        <Menu.Item>1</Menu.Item>
-        <Menu.Item>1</Menu.Item>
-        <Menu.Item>1</Menu.Item>
-    </Menu>
-)
 
 
 function CustomHeader(props) {
+    const history = useHistory();
+
+    const Logout = () => {
+        history.push("/login");
+    }
+
+    const menu = (
+        <Menu>
+            <Menu.Item
+                onClick={Logout}
+            >
+                Logout
+            </Menu.Item>
+        </Menu>
+    )
+    
+
     return (
         <Dropdown
             overlay={menu}

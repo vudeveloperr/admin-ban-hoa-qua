@@ -2,8 +2,7 @@ import {
     all, call, put,fork ,takeLatest,
 } from 'redux-saga/effects';
 
-import { FETCH_PRODUCTS } from '../actions/product';
-import actions from '../actions/product';
+import actions,{ FETCH_PRODUCTS } from '../actions/product';
 import rf from '../../requests/RequestFactory';
 
 function* fetchProducts(action) {

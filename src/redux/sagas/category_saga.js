@@ -2,10 +2,9 @@ import {
     all, call, put,fork ,takeLatest,
 } from 'redux-saga/effects';
 
-import {
+import actions,{
     FETCH_CATEGORY,
 } from '../actions/category';
-import actions from '../actions/category';
 import rf from '../../requests/RequestFactory';
 
 function* fetchCategories(action) {

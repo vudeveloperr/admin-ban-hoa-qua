@@ -1,6 +1,13 @@
+import {useEffect} from 'react';
 import { TotalAccount, NewAccountInMonth, Account} from './components';
+import actions from '../../redux/actions/admin';
+import {connect} from 'react-redux';
 import { Row, Col } from 'antd';
 function UserControl(props){
+
+    useEffect(()=>{
+        props.fetchAdmin();
+    },[])
     return(
         <div>
             UserControl
@@ -23,4 +30,18 @@ function UserControl(props){
     );
 }
 
-export default UserControl;
+const mapStateToProps = (state)=> {
+    return{
+        //admin: state.admin.admin
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return{
+        fetchAdmin: () => { 
+            dispatch(actions.fetchAdmin())
+        }
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(UserControl);
