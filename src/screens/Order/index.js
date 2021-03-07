@@ -1,6 +1,8 @@
 import {useState} from 'react';
 import {Table, Modal} from 'antd';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import orderactions from '../../redux/actions/order'
 
 const ButtonWrapper = styled.div`
     color: #1890ff;
@@ -58,7 +60,7 @@ function Order(props){
 
     return(
         <div>
-            <Table dataSource={dataSource} columns={columns} />
+            <Table dataSource={props.order} columns={columns} />
             <Modal
                 title="Edit Product"
                 visible={modalVisble}
@@ -71,4 +73,18 @@ function Order(props){
     );
 }
 
-export default Order;
+const mapStateToProps = (state) => {
+    return {
+        order: state.order.order,
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        fetchOrders: () => {
+            dispatch(orderactions.onFetchOrders())
+        },
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Order)

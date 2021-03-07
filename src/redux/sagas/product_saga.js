@@ -7,12 +7,12 @@ import rf from '../../requests/RequestFactory';
 
 function* fetchProducts(action) {
     try {
-        const { data, total_count, error } = yield call(
-            (data) => rf.getRequest('ProductRequest').fetchProducts(data), action.data
+        const {data, total_count, error} = yield call(
+            (data) => rf.getRequest('ProductRequest').fetchProducts(data), action.params
         );
-        if (error.code === 200) {
-            yield put(actions.onFetchProductsSucceed({ data, total_count }));
-        }
+        // if (resp.code === 200) {
+            yield put(actions.onFetchProductsSucceed({data, total_count}));
+        // }
     } catch (err) {
         console.log("=======", err)
         yield put(actions.onFetchProductsFailed(err));

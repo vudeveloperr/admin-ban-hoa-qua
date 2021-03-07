@@ -38,6 +38,7 @@ class BaseRequest {
         const { data } = response;
         return {
             data: data.data,
+            total_count: data.total_count,
             error: data.error,
         } || {};
     }

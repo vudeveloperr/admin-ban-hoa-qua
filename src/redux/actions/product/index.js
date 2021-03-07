@@ -4,8 +4,10 @@ export const FETCH_PRODUCTS_FAILED = 'FETCH_PRODUCTS_FAILED'
 
 
 export default {
-  onFetchProducts: () => ({
+  onFetchProducts: (params, callback) =>  ({
     type: FETCH_PRODUCTS,
+    params, 
+    callback
   }),
   onFetchProductsSucceed: (data) => ({
     type: FETCH_PRODUCTS_SUCCEED,
