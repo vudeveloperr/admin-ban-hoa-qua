@@ -6,6 +6,7 @@ import actions, {
     LOGIN,
 } from '../actions/account';
 import rf from '../../requests/RequestFactory';
+import axios from 'axios';
 
 function* login(action) {
     try {
