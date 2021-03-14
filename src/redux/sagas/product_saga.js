@@ -43,8 +43,8 @@ function* updateProduct(action) {
             (data) => rf.getRequest('ProductRequest').updateProduct(data), action.data
         );
         if (error.code === 200) {
-            yield call(action.callback());
-            yield put(actions.updateProduct());
+            action.callback();
+            yield put(actions.onUpdateProductSucceed({}));
         }
         else {
             yield put(actions.onUpdateProductFailed(error.message));

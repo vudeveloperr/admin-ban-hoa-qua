@@ -1,8 +1,10 @@
 import axios from 'axios'
 
+window.base_url = 'http://192.168.0.105:8080/v1'
+window.upload_url = 'http://192.168.0.105:8081'
+
 window.axios = axios.create({
-    baseURL: 'http://192.168.0.105:8080/v1',
+    baseURL: window.base_url,
     headers: {token: window.localStorage.getItem('token')}
   });
 
-window.upload_url = 'http://192.168.0.105:8081'

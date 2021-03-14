@@ -38,11 +38,12 @@ const tailLayout = {
 };
 
 
-function Product(props) {
+function Product(props){
 
 	const [modalVisble, setModalVisible] = useState(false);
 	const [addProduct, setAddProduct] = useState(false);
 	const [currentPage, setCurrentPage] = useState(1);
+	const [id, setId] = useState(0);
 	const [imgUrl, setImgUrl] = useState('');
 
 	let [form] = Form.useForm()
@@ -70,10 +71,17 @@ function Product(props) {
 
 	const formFinish = (values) => {
 		if (addProduct) {
-			props.addProduct({ ...values, image: imgUrl }, () => { modalVisble(false) });
+			props.addProduct({ ...values, image: imgUrl }, 
+				() => { 
+					setModalVisible(false); 
+				});
 		}
 		else {
-			props.updateProduct({ ...values, image: imgUrl }, () => { modalVisble(false) });
+			props.updateProduct({ ...values, image: imgUrl, id: id }, 
+				() => { 
+					setModalVisible(false);
+					props.fetchProducts({ page:currentPage, size: 10 });
+				});
 		}
 		;
 	}
@@ -106,7 +114,7 @@ function Product(props) {
 			title: 'Category',
 			dataIndex: 'category_id',
 			key: 'category_id',
-			render: () => ((props.category || []).find((dataIndex) => { return dataIndex }) || {}).name
+			render: (text) => ((props.category || []).find((item) => { return item.id === text.toString() }) || {}).name
 		},
 		{
 			title: 'Price',
@@ -127,7 +135,8 @@ function Product(props) {
 			render: (text, record, index) => (
 				<ButtonWrapper
 					onClick={() => {
-						editClick(record)
+						editClick(record);
+						setId(record.id);
 						setAddProduct(false);
 					}}
 				>
@@ -163,9 +172,10 @@ function Product(props) {
 					<Table dataSource={props.product} columns={columns}
 						pagination={{
 							current: currentPage,
+							showSizeChanger: false,
 							onChange: ((page, pageSize) => {
-								props.fetchProducts({ page, size: pageSize })
 								setCurrentPage(page)
+								props.fetchProducts({ page, size: pageSize })
 							}),
 							total: props.total_count
 						}}
