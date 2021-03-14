@@ -12,10 +12,10 @@ export default (
 ) => {
   switch (action.type) {
     case ADDITION_QUANTITY_SUCCEED:{
-      return  {
-          ...state,
-          product: action.data.data,
-      }
+        return  {
+            ...state,
+            product: action.data.data,
+        }
     }
     case FETCH_LIST_IMPORT_SUCCEED:{
         return  {

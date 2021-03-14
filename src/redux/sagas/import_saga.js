@@ -7,7 +7,7 @@ import rf from '../../requests/RequestFactory';
 function* fetchListImport(action) {
     try {
         const {data, error} = yield call(
-            (data) => rf.getRequest('ImportRequest').fetchListImport(data), action.params
+            (data) => rf.getRequest('ImportRequest').fetchImport(), action.params
         );
         // if (resp.code === 200) {
             yield put(actions.onFetchImportSucceed({data}));
@@ -35,7 +35,6 @@ function* additionQuantity(action) {
         yield put(actions.onAdditionQuantityFailed(err));
     }
 }
-
 
 function* watchImport() {
     yield takeLatest(FETCH_LIST_IMPORT, fetchListImport);

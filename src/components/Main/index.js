@@ -1,6 +1,6 @@
 import { Layout } from 'antd';
 import { SiderMenu, CustomHeader } from '../';
-import { Home, Product, Order, Import, Discounts, UserControl, Statistic } from '../../screens';
+import { Home, Product, Order, Import, Discounts, UserControl, Statistic, Vendors} from '../../screens';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -48,6 +48,7 @@ function Main(props) {
                         <Route exact path="/discounts" component={Discounts} />
                         <Route exact path="/user-control" component={UserControl}/>
                         <Route exact path="/statistic" component={Statistic}/>
+                        <Route exact path="/vendors" component={Vendors}/>
                     </ContentWrapper>
                 </Content>
             </Layout>
