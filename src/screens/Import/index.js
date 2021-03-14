@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Form,
   Input,
@@ -8,11 +8,14 @@ import {
   Upload,
   message,
   Table,
+  Modal,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import styled from 'styled-components';
 import { ImportForm } from "./components";
-
+import moment from 'moment';
+import { connect } from 'react-redux';
+import importactions from '../../redux/actions/import'
 
 const ButtonWrapper = styled.div`
     color: #1890ff;
@@ -58,76 +61,80 @@ const props = {
 };
 
 function Import(props) {
-  const [modalVisble, setModalVisible] = useState(false)
-  const dataSource = {};
 
+  useEffect(
+		() => {
+			props.fetchImport()
+	}, [])
+
+  const [modalVisble, setModalVisible] = useState(false)
+  const [ showDetail ] = useState(false)
+  
   const columns = [
     {
-      title: "Image",
-      dataIndex: "image",
-      render: (text) => (
-        <img className="MuiAvatar-root MuiAvatar-circle jss1040" src={text} />
-      ),
-      key: "image",
+      title: "Id",
+      dataIndex: "id",
+      key: "id",
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "vendorsName",
+      dataIndex: "vendor_name",
+      key: "vendor_name",
     },
     {
-      title: "Unit",
-      dataIndex: "unit",
-      key: "unit",
+      title: "Import Time",
+      dataIndex: "",
+      key: "last_up_date",
+      render : (record)=>(
+        moment.unix(record.last_up_date).format('dddd, MMMM Do, YYYY h:mm:ss A')
+      )
     },
     {
-      title: "Category",
-      dataIndex: "category_id",
-      key: "category_id",
-      // render: () => props.category_id.find((dataIndex) => {return dataIndex}).name
+      title: "Total",
+      dataIndex: "total",
+      key: "total",
     },
     {
-      title: "Price",
-      dataIndex: "price",
-      key: "price",
+      title: "Detail",
+      dataIndex: "",
+      key: "detail",
+      render : (text, record)=>(
+        record.detail.map((x) =>
+        <>{x.name}</>
+      ))
     },
     {
-      title: "AVGRate",
-      dataIndex: "rate_avg",
-      key: "rate_avg",
-    },
-    {
-      title: "Remaining",
-      dataIndex: "remaining",
-      key: "remaining",
-    },
-    {
-      render: () => <ButtonWrapper onClick={editClick}>Edit</ButtonWrapper>,
+      render: () => <ButtonWrapper onClick={editClick}>DETAIL</ButtonWrapper>,
     },
   ];
   const editClick = () => {
     setModalVisible(true);
-  };
+  }
+
+  const modalOk = () => {
+      setModalVisible(false);
+  }
+
+  const modalCancel = () => {
+      setModalVisible(false);
+  }
+
+  
 
   return (
     <div>
       Import
       <hr />
       <Tabs defaultActiveKey="1" type="card">
+
         <TabPane tab="List Import Product" key="1">
-          <Table
-            dataSource={dataSource}
-            columns={columns}
-            // pagination={{
-            //     current: currentPage,
-            //     onChange: ((page, pageSize) => {
-            //         props.fetchProducts({page, size: pageSize})
-            //         setCurrentPage(page)
-            //     }),
-            //     total: totalCount
-            // }}
-          />
+          <Table dataSource={props.import} columns={columns} />
+          <Modal title="Detail Import" visible={modalVisble} onOk={modalOk} onCancel={modalCancel}>
+            <p> {(props.import.detail || {}).name} </p>
+          </Modal>
+
         </TabPane>
+        
         <TabPane tab="Import New Product" key="2">
           <Form {...layout} name="control-ref">
             <Form.Item name="name" label="Name" rules={[{ required: true }]}>
@@ -180,4 +187,18 @@ function Import(props) {
   );
 }
 
-export default Import;
+const mapStateToProps = (state) => {
+  return {
+    import: state.imports.product,
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchImport: () => {
+      dispatch(importactions.onFetchImport())
+    },
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Import);

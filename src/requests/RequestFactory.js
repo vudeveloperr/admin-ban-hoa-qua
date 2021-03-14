@@ -3,6 +3,8 @@ import ProductRequest from './ProductRequest';
 import AdminRequest from './AdminRequest';
 import AccountRequest from './AccountRequests';
 import OrderRequest from './OrderRequest';
+import ImportRequest from './ImportRequest';
+import VendorsRequest from './VendorsRequest';
 
 
 const requestMap = {
@@ -10,7 +12,9 @@ const requestMap = {
     ProductRequest,
     AdminRequest,
     AccountRequest,
-    OrderRequest
+    OrderRequest,
+    ImportRequest,
+    VendorsRequest,
 };
 
 const instances = {};
@@ -29,6 +33,5 @@ export default class RequestFactory {
         }
         return requestInstance;
     }
-
     
 }
