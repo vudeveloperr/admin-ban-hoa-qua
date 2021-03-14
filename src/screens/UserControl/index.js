@@ -24,7 +24,7 @@ function UserControl(props){
                 </Col>
             </Row>
             <div>
-            <Account />
+            <Account users={props.users}/>
             </div>
         </div>
     );
@@ -32,7 +32,7 @@ function UserControl(props){
 
 const mapStateToProps = (state)=> {
     return{
-        //admin: state.admin.admin
+        users: state.admin.users
     }
 }
 

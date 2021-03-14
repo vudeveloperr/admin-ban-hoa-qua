@@ -75,7 +75,7 @@ function Order(props){
 
 const mapStateToProps = (state) => {
     return {
-        order: state.order.order,
+        //order: state.order.order,
     }
 }
 

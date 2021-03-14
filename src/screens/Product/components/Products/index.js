@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Table, Form, Input, Modal } from 'antd';
+import { Table, Form, InputNumber, Modal, Select, Button } from 'antd';
 import styled from 'styled-components';
 
+const { Option } = Select;
 
 const ButtonWrapper = styled.div`
     color: #1890ff;
@@ -10,16 +11,27 @@ const ButtonWrapper = styled.div`
     }
 `
 
+const layout = {
+    labelCol: { span: 8 },
+    wrapperCol: { span: 16 },
+  };
+  const tailLayout = {
+    wrapperCol: { offset: 8, span: 16 },
+  };
+  
+
 function Products(props) {
     const [modalVisble, setModalVisible] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
     const [totalCount, setTotalCount] = useState(0)
 
+    const [form] = Form.useForm();
+
     const columns = [
         {
             title: 'Image',
             dataIndex: 'image',
-            render:  (text) => <img className="MuiAvatar-root MuiAvatar-circle jss1040" src={text} />,
+            render: (text) => <img className="MuiAvatar-root MuiAvatar-circle jss1040" src={text} />,
             key: 'image'
         },
         {
@@ -36,7 +48,9 @@ function Products(props) {
             title: 'Category',
             dataIndex: 'category_id',
             key: 'category_id',
-            // render: () => props.category_id.find((dataIndex) => {return dataIndex}).name
+            render: (text) => {
+                return (props.category.find((item) => (item.id === text.toString())) || {}).name
+            }
         },
         {
             title: 'Price',
@@ -54,9 +68,9 @@ function Products(props) {
             key: 'remaining',
         },
         {
-            render: () => (
+            render: (text,record) => (
                 <ButtonWrapper
-                    onClick={editClick}
+                    onClick={() => editClick(record)}
                 >
                     Edit
                 </ButtonWrapper>
@@ -64,7 +78,8 @@ function Products(props) {
         },
     ];
 
-    const editClick = () => {
+    const editClick = (record) => {
+        form.setFieldsValue(record)
         setModalVisible(true);
     }
 
@@ -87,7 +102,7 @@ function Products(props) {
                 pagination={{
                     current: currentPage,
                     onChange: ((page, pageSize) => {
-                        props.fetchProducts({page, size: pageSize})
+                        props.fetchProducts({ page, size: pageSize })
                         setCurrentPage(page)
                     }),
                     total: totalCount
@@ -98,9 +113,35 @@ function Products(props) {
                 visible={modalVisble}
                 onOk={modalOk}
                 onCancel={modalCancel}
+                footer={false}
             >
-                <Form>
-
+                <Form
+                    form={form}
+                    {...layout}
+                >
+                    <Form.Item
+                        label="Category"
+                        name="category_id"
+                    >
+                        <Select>
+                            {
+                                props.category.map((item) => (
+                                    <Option key={item.id} value={parseInt(item.id,10)}>{item.name}</Option>
+                                ))
+                            }
+                        </Select>
+                    </Form.Item>
+                    <Form.Item
+                        label="Price"
+                        name="price"
+                    >
+                        <InputNumber />
+                    </Form.Item>
+                    <Form.Item
+                    {...tailLayout}
+                    >
+                        <Button type="primary" htmlType="submit">Submit</Button>
+                    </Form.Item>
                 </Form>
             </Modal>
         </div>
