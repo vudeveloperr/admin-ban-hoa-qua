@@ -16,7 +16,7 @@ function* login(action) {
         if (error.code === 200 && data.typeid === "admin") {
             window.localStorage.setItem("token",data.token);
             window.axios = axios.create({
-                baseURL: 'http://192.168.0.109/v1',
+                baseURL: window.base_url,
                 headers: {token:data.token}
               });
             yield action.callback();
