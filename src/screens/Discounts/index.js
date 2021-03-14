@@ -59,6 +59,7 @@ const columns = [
         key: 'lastupdate',
     },
 ];
+
 export default function Discounts(props) {
     const [visible, setVisible] = useState(false);
 
@@ -71,17 +72,19 @@ export default function Discounts(props) {
     }
     return (
         <div>
-            Discounts
-            <hr/>
+            
             <div className="btn-discounts">
                 <Row className="">
-                    <Col span={21} className=''></Col>
+                    <Col span={21} className=''>
+                        Discounts
+                    </Col>
                     <Col span={3} className=''>
                     <CenterWrapper>
                         <Button className="btn-create-sale" onClick={showModal}>CREATE SALE</Button>
                     </CenterWrapper>
                     </Col>
                 </Row> 
+                <hr/>
                 <Spacing>
                     
                     <Modal

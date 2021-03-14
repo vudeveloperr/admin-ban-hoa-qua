@@ -10,9 +10,9 @@ import rf from '../../requests/RequestFactory';
 function* fetchAdmin(action) {
     try {
         const {data} = yield call(
-            () => rf.getRequest('AdminRequest').fetchAdmin(),{}
+            (data) => rf.getRequest('AdminRequest').fetchAdmin(data),action.data
         );
-        yield put(actions.fetchAdminSucceed(data));
+        yield put(actions.fetchAdminSucceed({data}));
     } catch (err) {
         yield put(actions.fetchAdminFailed(err));
     }

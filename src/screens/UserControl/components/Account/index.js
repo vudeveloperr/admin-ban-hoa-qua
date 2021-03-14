@@ -1,58 +1,20 @@
 import { Table } from 'antd';
 
-const dataSource = [
-    {
-      key: '1',
-      username: 'admin',
-      type: 'admin',
-      phone: '0987654321',
-      email: 'admin@gmail.com',
-      gender: 'male',
-    },
-    {
-      key: '2',
-      username: 'vanvu',
-      type: 'user',
-      phone: '0987654321',
-      email: 'vanvu@gmail.com',
-      gender: 'male',
-    },
-    {
-      key: '3',
-      username: 'namnguyen',
-      type: 'user',
-      phone: '0987654321',
-      email: 'namnguyen@gmail.com',
-      gender: 'male',
-    },
-    {
-      key: '4',
-      username: 'dungtran',
-      type: 'user',
-      phone: '0987654321',
-      email: 'dungtran@gmail.com',
-      gender: 'male',
-    },
-    {
-      key: '5',
-      username: 'tuyenthe',
-      type: 'user',
-      phone: '0987654321',
-      email: 'tuyenthe@gmail.com',
-      gender: 'male',
-    },
-  ];
-  
   const columns = [
     {
-      title: 'UserName',
-      dataIndex: 'username',
-      key: 'username',
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
     },
     {
-      title: 'Type',
-      dataIndex: 'type',
-      key: 'type',
+      title: 'UserName',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Rank',
+      dataIndex: 'rank',
+      key: 'rank',
       
     },
     {
@@ -71,12 +33,13 @@ const dataSource = [
       key: 'gender',
     },
   ];
-
-export default function Account() {
+  
+export default function Account(props) {
     return (
+      
         <div className='jss736'>
             <h2>LIST ACCOUNTS</h2>
-            <Table dataSource={dataSource} columns={columns} />
+            <Table dataSource={props.account} columns={columns} />
             
         </div>
     )

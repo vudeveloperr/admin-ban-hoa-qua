@@ -4,6 +4,7 @@ import watchProduct from './product_saga';
 import watchAdmin from './admin_saga';
 import watchAccount from './account_saga';
 import watchOrder from './order_saga';
+import watchImport from './import_saga';
 
 function* rootSaga() {
   yield all([
@@ -12,6 +13,7 @@ function* rootSaga() {
     watchAdmin(),
     watchAccount(),
     watchOrder(),
+    watchImport(),
   ]);
 }
 

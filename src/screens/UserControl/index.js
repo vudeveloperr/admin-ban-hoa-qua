@@ -3,28 +3,31 @@ import { TotalAccount, NewAccountInMonth, Account} from './components';
 import actions from '../../redux/actions/admin';
 import {connect} from 'react-redux';
 import { Row, Col } from 'antd';
-function UserControl(props){
 
+
+function UserControl(props){
     useEffect(()=>{
         props.fetchAdmin();
     },[])
+    // console.log(props)
     return(
+        
         <div>
             UserControl
             <hr/>
             <Row className="jss859">
                 <Col span={8} className='TotalRevenueToday'>
-                    < NewAccountInMonth/>
+                    <NewAccountInMonth/>
                 </Col>
                 <Col span={8} className='TotalOrderToday'>
-                <TotalAccount />
+                    <TotalAccount/>
                 </Col>
                 <Col span={8} className=''>
 
                 </Col>
             </Row>
             <div>
-            <Account />
+                <Account account = {props.admin}/>
             </div>
         </div>
     );
@@ -32,7 +35,7 @@ function UserControl(props){
 
 const mapStateToProps = (state)=> {
     return{
-        //admin: state.admin.admin
+        admin: state.admin.account
     }
 }
 

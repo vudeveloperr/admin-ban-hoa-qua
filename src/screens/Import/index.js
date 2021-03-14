@@ -7,10 +7,19 @@ import {
   Tabs,
   Upload,
   message,
+  Table,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import styled from 'styled-components';
+import { ImportForm } from "./components";
 
-import { ImportForm } from './components';
+
+const ButtonWrapper = styled.div`
+    color: #1890ff;
+    &:hover{
+        cursor: pointer;
+    }
+`
 
 const layout = {
   labelCol: {
@@ -49,30 +58,106 @@ const props = {
 };
 
 function Import(props) {
+  const [modalVisble, setModalVisible] = useState(false)
+  const dataSource = {};
+
+  const columns = [
+    {
+      title: "Image",
+      dataIndex: "image",
+      render: (text) => (
+        <img className="MuiAvatar-root MuiAvatar-circle jss1040" src={text} />
+      ),
+      key: "image",
+    },
+    {
+      title: "Name",
+      dataIndex: "name",
+      key: "name",
+    },
+    {
+      title: "Unit",
+      dataIndex: "unit",
+      key: "unit",
+    },
+    {
+      title: "Category",
+      dataIndex: "category_id",
+      key: "category_id",
+      // render: () => props.category_id.find((dataIndex) => {return dataIndex}).name
+    },
+    {
+      title: "Price",
+      dataIndex: "price",
+      key: "price",
+    },
+    {
+      title: "AVGRate",
+      dataIndex: "rate_avg",
+      key: "rate_avg",
+    },
+    {
+      title: "Remaining",
+      dataIndex: "remaining",
+      key: "remaining",
+    },
+    {
+      render: () => <ButtonWrapper onClick={editClick}>Edit</ButtonWrapper>,
+    },
+  ];
+  const editClick = () => {
+    setModalVisible(true);
+  };
+
   return (
     <div>
       Import
       <hr />
       <Tabs defaultActiveKey="1" type="card">
-        <TabPane tab="Import New Product" key="1">
-
+        <TabPane tab="List Import Product" key="1">
+          <Table
+            dataSource={dataSource}
+            columns={columns}
+            // pagination={{
+            //     current: currentPage,
+            //     onChange: ((page, pageSize) => {
+            //         props.fetchProducts({page, size: pageSize})
+            //         setCurrentPage(page)
+            //     }),
+            //     total: totalCount
+            // }}
+          />
+        </TabPane>
+        <TabPane tab="Import New Product" key="2">
           <Form {...layout} name="control-ref">
             <Form.Item name="name" label="Name" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
-            <Form.Item name="importmoney" label="Import Money" rules={[{ required: true }]}>
+            <Form.Item
+              name="importmoney"
+              label="Import Money"
+              rules={[{ required: true }]}
+            >
               <Input />
             </Form.Item>
-            <Form.Item name="price" label="Price on Page" rules={[{ required: true }]}>
+            <Form.Item
+              name="price"
+              label="Price on Page"
+              rules={[{ required: true }]}
+            >
               <Input />
             </Form.Item>
             <Form.Item name="unit" label="Unit" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
-            <Form.Item name="remaining" label="Quantity" >
+            <Form.Item name="remaining" label="Quantity">
               <InputNumber />
             </Form.Item>
-            <Form.Item name="description" label="Description" rules={[{ required: true }]}>
+            <Form.Item
+              name="description"
+              label="Description"
+              rules={[{ required: true }]}
+            >
               <Input />
             </Form.Item>
             <Form.Item label="Upload Image Product">
@@ -83,11 +168,11 @@ function Import(props) {
             <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit">
                 Submit
-                </Button>
+              </Button>
             </Form.Item>
           </Form>
         </TabPane>
-        <TabPane tab="Add Quantity" key="2">
+        <TabPane tab="Add Quantity" key="3">
           <ImportForm />
         </TabPane>
       </Tabs>

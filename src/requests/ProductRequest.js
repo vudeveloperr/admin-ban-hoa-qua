@@ -7,4 +7,8 @@ export default class ProductRequest extends BaseRequest {
         const url = `${prefix}/list`;
         return this.get(url, params); 
     }
+    createProduct(data){
+        const url = `${prefix}`;
+        return this.post(url,data); 
+    }
 }
