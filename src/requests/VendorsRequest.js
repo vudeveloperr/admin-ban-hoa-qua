@@ -8,5 +8,13 @@ export default class VendorsRequest extends BaseRequest {
         const url = `${prefix}`;
         return this.get(url);
     }
+    createVendor(data){
+        const url = `${prefix}/`;
+        return this.post(url,data); 
+    }
+    updateVendor(data){
+        const url = `${prefix}/`
+        return this.put(url,data);
+    }
 
 }

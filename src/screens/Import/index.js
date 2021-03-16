@@ -95,19 +95,23 @@ function Import(props) {
       key: "total",
     },
     {
-      title: "Detail",
-      dataIndex: "",
-      key: "detail",
-      render : (text, record)=>(
-        record.detail.map((x) =>
-        <>{x.name}</>
-      ))
+      title: "Importer",
+      dataIndex: "name_admin",
+      key: "name_admin",
     },
+    // {
+    //   render: (record) => (
+    //     record.detail
+    //   )
+    // },
     {
-      render: () => <ButtonWrapper onClick={editClick}>DETAIL</ButtonWrapper>,
+      title: "Detail",
+      render: (text, record) => <ButtonWrapper onClick={() => {
+        detailClick()
+      }}>DETAIL</ButtonWrapper>,
     },
   ];
-  const editClick = () => {
+  const detailClick = () => {
     setModalVisible(true);
   }
 
@@ -188,6 +192,7 @@ function Import(props) {
 }
 
 const mapStateToProps = (state) => {
+  console.log([...state.imports.product])
   return {
     import: state.imports.product,
   }

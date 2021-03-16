@@ -37,14 +37,34 @@ const tailLayout = {
 function Vendors(props){
     const [modalVisble, setModalVisible] = useState(false)
     const [modalVisbleNew, setModalVisibleNew] = useState(false)
+    const [addVendor, setAddVendor] = useState(false);
     const [ editData, setEditData ] = useState(0)
+    const [id, setId] = useState(0);
+
+    let [form] = Form.useForm()
+
+    const formUpdate = (values) => {
+		props.updateVendors({ ...values, id: id }, 
+			() => { 
+				setModalVisible(false);
+				props.fetchVendors();
+			});		
+	}
+
+    const formCreate = (values) => {
+        props.createVendors({ ...values},
+            () => {
+                setModalVisibleNew(false);
+                props.fetchVendors();
+            });
+    }
+
     useEffect(
 		() => {
 			props.fetchVendors()
 	}, [])
 
     const columns = [
-       
         {
             title: 'Id',
             dataIndex: 'id',
@@ -71,9 +91,13 @@ function Vendors(props){
             key: 'address',
         },
         {
-            render: () => (
+            render: (text, record, index) => (
                 <ButtonWrapper
-                    onClick={editClick}
+                    onClick={() => {
+                        editClick(record);
+                        setId(record.id);
+                        setEditData(true);
+                    }}
                 >
                     Edit
                 </ButtonWrapper>
@@ -81,13 +105,17 @@ function Vendors(props){
         },
     ];
 
-    const editDataClick = () => {
-        setEditData(props.vendors)
+    const editClick = (record) => {
+        setModalVisible(true);
+        form.setFieldsValue(record);
     }
 
-    const editClick = () => {
-        setModalVisible(true);
+    const newVendorsClick = () =>{
+        setModalVisibleNew(true);
+        setAddVendor(true);
+        form.resetFields();
     }
+
 
     const modalOk = () => {
         setModalVisible(false);
@@ -97,10 +125,6 @@ function Vendors(props){
         setModalVisible(false);
     }
 
-    const newVendorsClick = () =>{
-        setModalVisibleNew(true);
-    }
-
     const modalOkNew = () => {
         setModalVisibleNew(false);
     }
@@ -108,7 +132,6 @@ function Vendors(props){
     const modalCancelNew = () => {
         setModalVisibleNew(false);
     }
-    
     
     return (
         <div>
@@ -126,7 +149,7 @@ function Vendors(props){
             <Table dataSource={props.vendors} columns={columns}/>
 
             <Modal title="Create New Vendors" visible={modalVisbleNew} onOk={modalOkNew} onCancel={modalCancelNew}>
-                <Form {...layout} name="control-ref">
+                <Form {...layout} form={form} onFinish={formCreate} name="control-ref">
                     <Form.Item name="name" label="Name" rules={[{ required: true }]}>
                         <Input />
                     </Form.Item>
@@ -149,7 +172,7 @@ function Vendors(props){
             </Modal>
 
             <Modal title="Detail Vendors" visible={modalVisble} onOk={modalOk} onCancel={modalCancel}>
-                <Form {...layout} name="control-ref">
+                <Form {...layout} form={form} onFinish={formUpdate} name="control-ref">
                     <Form.Item name="name" label="Name" rules={[{ required: true }]}>
                         <Input />
                     </Form.Item>
@@ -185,6 +208,12 @@ const mapDispatchToProps = (dispatch) => {
         fetchVendors: () => {
             dispatch(vendoractions.onFetchVendors())
         },
+        updateVendors: (data, callback) => {
+            dispatch(vendoractions.onUpdateVendor(data, callback))
+        },
+        createVendors: (data, callback) => {
+            dispatch(vendoractions.onCreateVendor(data, callback))
+        }
     }
 }
 
