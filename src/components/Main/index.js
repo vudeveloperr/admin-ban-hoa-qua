@@ -45,7 +45,7 @@ function Main(props) {
                         <Route exact path="/product" component={Product} />
                         <Route exact path="/order" component={Order} />
                         <Route exact path="/import" component={Import} />
-                        <Route exact path="/discounts" component={Discounts} />
+                        <Route exact path="/discount" component={Discounts} />
                         <Route exact path="/user-control" component={UserControl}/>
                         <Route exact path="/statistic" component={Statistic}/>
                         <Route exact path="/vendors" component={Vendors}/>

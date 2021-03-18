@@ -5,6 +5,7 @@ import AccountRequest from './AccountRequests';
 import OrderRequest from './OrderRequest';
 import ImportRequest from './ImportRequest';
 import VendorsRequest from './VendorsRequest';
+import DiscountRequest from './DiscountRequest';
 
 
 const requestMap = {
@@ -15,6 +16,7 @@ const requestMap = {
     OrderRequest,
     ImportRequest,
     VendorsRequest,
+    DiscountRequest,
 };
 
 const instances = {};

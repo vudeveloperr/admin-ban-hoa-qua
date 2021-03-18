@@ -1,7 +1,11 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { connect } from 'react-redux'
 import { Table, Checkbox, Row, Col, Form, Input, Upload, Button, Modal, InputNumber  } from 'antd';
 import { UploadOutlined } from "@ant-design/icons";
 import styled from 'styled-components';
+import discountactions from '../../redux/actions/discount'
+import moment from 'moment';
+
 const CenterWrapper = styled.div`
   width: 100%;
   text-align: center;
@@ -11,7 +15,12 @@ const Spacing = styled.div`
     margin-bottom: 10px;
   }
 `
-
+const ButtonWrapper = styled.div`
+    color: #1890ff;
+    &:hover{
+        cursor: pointer;
+    }
+`
 
 const layout = {
     labelCol: {
@@ -29,92 +38,144 @@ const tailLayout = {
     },
 };
 
-const dataSource = [
-    {
-        key: '1',
-        name: 'Cornish New Potatoes (500g)',
-        remaining: 32,
-        description: 'Weight: 500g',
-    },
-];
+function Discounts(props) {
 
-const columns = [
-    {
-        title: 'Select',
-        render: () => <Checkbox></Checkbox>
-    },
-    {
-        title: 'Name Sale Off Event',
-        dataIndex: 'name',
-        key: 'name',
-    },
-    {
-        title: 'Value',
-        dataIndex: 'value',
-        key: 'value',
-    },
-    {
-        title: 'Time',
-        dataIndex: 'lastupdate',
-        key: 'lastupdate',
-    },
-];
+    const columns = [
+        // {
+        //     title: 'Select',
+        //     render: () => <Checkbox></Checkbox>
+        // },
+        {
+            title: 'Rank',
+            dataIndex: 'rank',
+            key: 'rank',
+        },
+        {
+            title: 'Rate',
+            dataIndex: 'rate',
+            key: 'rate',
+        },
+        {
+            title: 'Time Create Discount',
+            dataIndex: '',
+            render : (record)=>(
+                moment.unix(record.last_up_date).format('dddd, MMMM Do, YYYY h:mm:ss A')
+            )
+        },
+        ,
+        {
+            render: (text, record, index) => (
+                <ButtonWrapper
+                    onClick={() => {
+                        editClick(record);
+                        setRank(record.rank);
+                        setEditData(true);
+                    }}
+                >
+                    Edit
+                </ButtonWrapper>
+            )
+        },
+    ];
 
-export default function Discounts(props) {
-    const [visible, setVisible] = useState(false);
+    useEffect(() => {
+        props.fetchDiscount()
+    }, [])
 
-    const showModal = () => {
-        setVisible(true);
+    const formUpdate = (values) => {
+        console.log("hiha :", values)
+		props.updateDiscount({ ...values, rank: rank}, 
+			() => { 
+				setVisible(false);
+				props.fetchDiscount();
+			});
+	}
+    const formCreate = (values) => {
+        props.createDiscount({ ...values},
+            () => {
+                setVisibleADD(false);
+                props.fetchDiscount();
+            });
     }
 
-    const hideModal = () => {
+    const [visible, setVisible] = useState(false);
+    const [visibleADD, setVisibleADD] = useState(false);
+    const [ editData, setEditData ] = useState(0)
+    const [addDiscount, setAddDiscount] = useState(false);
+    const [rank, setRank] = useState(0);
+    let [form] = Form.useForm()
+
+    const modalOk = () => {
         setVisible(false);
     }
+    const modalCancel = () => {
+        setVisible(false);
+    }
+    const editClick = (record) => {
+        setVisible(true);
+        form.setFieldsValue(record);
+    }
+
+
+
+    const hideModalADD = () => {
+        setVisibleADD(false);
+    }
+    const modalOkADD = () => {
+        setVisibleADD(false);
+    }
+
+    const addClick = (record) => {
+        setVisibleADD(true);
+        setAddDiscount(true);
+        form.resetFields();
+    }
+
+
     return (
         <div>
             
             <div className="btn-discounts">
                 <Row className="">
-                    <Col span={21} className=''>
+                    <Col span={20} className=''>
                         Discounts
                     </Col>
-                    <Col span={3} className=''>
+                    <Col span={4} className=''>
                     <CenterWrapper>
-                        <Button className="btn-create-sale" onClick={showModal}>CREATE SALE</Button>
+                        <Button className="btn-create-sale" onClick={addClick}>CREATE DISCOUNT</Button>
                     </CenterWrapper>
                     </Col>
-                </Row> 
+                </Row>
                 <hr/>
                 <Spacing>
-                    
                     <Modal
-                        title="Add New SaleOff Campaign"
-                        visible={visible}
-                        onCancel={hideModal}
+                        title="Add New Discount"
+                        visible={visibleADD}
+                        onCancel={hideModalADD}
+                        onOk={modalOkADD}
                     >
-                        <Form {...layout} name="control-ref">
-                            <Form.Item name="name" label="Name" rules={[{ required: true }]}>
-                                <Input />
+                        <Form {...layout} form={form} onFinish={formCreate} name="control-ref">
+                            <Form.Item name="rank" label="Rank" rules={[{ required: true }]}>
+                                <InputNumber min={1} max={10} defaultValue={1}/>
                             </Form.Item>
-                            <Form.Item name="importmoney" label="Import Money" rules={[{ required: true }]}>
-                                <Input />
+                            <Form.Item name="rate" label="Rate" rules={[{ required: true }]}>
+                                <InputNumber min={1} max={10} defaultValue={1}/>
                             </Form.Item>
-                            <Form.Item name="price" label="Price on Page" rules={[{ required: true }]}>
-                                <Input />
+                            <Form.Item {...tailLayout}>
+                                <Button type="primary" htmlType="submit">
+                                    Submit
+                                </Button>
                             </Form.Item>
-                            <Form.Item name="unit" label="Unit" rules={[{ required: true }]}>
-                                <Input />
+                        </Form>
+                    </Modal>
+
+                    <Modal title="Detail Vendors" visible={visible} onOk={modalOk} onCancel={modalCancel}>
+                        <Form {...layout} form={form} onFinish={formUpdate} name="control-ref">
+                            <Form.Item name="rank" label="Rank" rules={[{ required: true }]}>
+                                <Input disabled/>
                             </Form.Item>
-                            <Form.Item name="remaining" label="Quantity" >
+                            <Form.Item name="rate" label="Rate" rules={[{ required: true }]}>
                                 <InputNumber />
-                            </Form.Item>
-                            <Form.Item name="description" label="Description" rules={[{ required: true }]}>
-                                <Input />
-                            </Form.Item>
-                            <Form.Item label="Upload Image For Banner">
-                                <Upload {...props}>
-                                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                                </Upload>
                             </Form.Item>
                             <Form.Item {...tailLayout}>
                                 <Button type="primary" htmlType="submit">
@@ -125,7 +186,30 @@ export default function Discounts(props) {
                     </Modal>
                 </Spacing>
             </div>
-            <Table dataSource={dataSource} columns={columns} />
+            <Table dataSource={props.discount} columns={columns} />
         </div>
     )
 }
+
+
+const mapStateToProps = (state) => {
+    return{
+        discount: state.discount.discount
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return{
+        fetchDiscount: () => {
+            dispatch(discountactions.onFetchDiscount())
+        },
+        updateDiscount: (data, callback) => {
+            dispatch(discountactions.onUpdateDiscount(data, callback))
+        },
+        createDiscount: (data, callback) => {
+            dispatch(discountactions.onCreateDiscount(data, callback))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Discounts)

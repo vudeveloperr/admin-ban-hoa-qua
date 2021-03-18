@@ -35,34 +35,6 @@ const tailLayout = {
 
 
 function Vendors(props){
-    const [modalVisble, setModalVisible] = useState(false)
-    const [modalVisbleNew, setModalVisibleNew] = useState(false)
-    const [addVendor, setAddVendor] = useState(false);
-    const [ editData, setEditData ] = useState(0)
-    const [id, setId] = useState(0);
-
-    let [form] = Form.useForm()
-
-    const formUpdate = (values) => {
-		props.updateVendors({ ...values, id: id }, 
-			() => { 
-				setModalVisible(false);
-				props.fetchVendors();
-			});		
-	}
-
-    const formCreate = (values) => {
-        props.createVendors({ ...values},
-            () => {
-                setModalVisibleNew(false);
-                props.fetchVendors();
-            });
-    }
-
-    useEffect(
-		() => {
-			props.fetchVendors()
-	}, [])
 
     const columns = [
         {
@@ -105,17 +77,39 @@ function Vendors(props){
         },
     ];
 
+    const [modalVisble, setModalVisible] = useState(false)
+    const [modalVisbleNew, setModalVisibleNew] = useState(false)
+    const [addVendor, setAddVendor] = useState(false);
+    const [editData, setEditData] = useState(0)
+    const [id, setId] = useState(0);
+
+    let [form] = Form.useForm()
+
+    const formUpdate = (values) => {
+		props.updateVendors({ ...values, id: id }, 
+			() => { 
+				setModalVisible(false);
+				props.fetchVendors();
+			});		
+	}
+
+    const formCreate = (values) => {
+        props.createVendors({ ...values},
+            () => {
+                setModalVisibleNew(false);
+                props.fetchVendors();
+            });
+    }
+
+    useEffect(
+		() => {
+			props.fetchVendors()
+	}, [])
+
     const editClick = (record) => {
         setModalVisible(true);
         form.setFieldsValue(record);
     }
-
-    const newVendorsClick = () =>{
-        setModalVisibleNew(true);
-        setAddVendor(true);
-        form.resetFields();
-    }
-
 
     const modalOk = () => {
         setModalVisible(false);
@@ -123,6 +117,13 @@ function Vendors(props){
 
     const modalCancel = () => {
         setModalVisible(false);
+    }
+
+
+    const newVendorsClick = () =>{
+        setModalVisibleNew(true);
+        setAddVendor(true);
+        form.resetFields();
     }
 
     const modalOkNew = () => {

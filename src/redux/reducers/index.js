@@ -6,6 +6,7 @@ import imports from "./import"
 import vendors from "./vendor"
 import category from './category';
 import product from './product';
+import discount from './discount';
 
 const allReducers = combineReducers({
   category,
@@ -14,7 +15,8 @@ const allReducers = combineReducers({
   order,
   admin,
   imports,
-  vendors
+  vendors,
+  discount
 });
 
 export default allReducers;

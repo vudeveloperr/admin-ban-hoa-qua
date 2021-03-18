@@ -18,7 +18,6 @@ function* fetchListVendors(action) {
     }
 }
 
-
 function* createVendor(action) {
     try {
         const { data, error } = yield call(

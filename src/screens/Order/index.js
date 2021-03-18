@@ -54,7 +54,7 @@ function Order(props){
         },
         {
             title: 'Require',
-            dataIndex: 'detail'
+            dataIndex: ''
         },
         {
             render: () => (
