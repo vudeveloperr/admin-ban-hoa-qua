@@ -53,13 +53,20 @@ function Order(props){
             dataIndex: 'number'
         },
         {
-            title: 'Require',
-            dataIndex: 'detail'
+            title: 'Order',
+            dataIndex: 'detail',
+            render: (text,record) => (
+            <div>
+                {record.detail.map((item)=> (
+                    <p>{item.name} x {item.quantity}</p>
+                ))}
+                 
+            </div>)
         },
         {
-            render: () => (
+            render: (text,record) => (
                 <ButtonWrapper
-                    onClick={detailClick}
+                    onClick={() => {detailClick({id: record.id})}}
                 >
                     Accept
                 </ButtonWrapper>
@@ -68,8 +75,7 @@ function Order(props){
     ];
 
     const detailClick = (record) => {
-        // setModalVisible(true);
-        props.acceptOrder(record.id)
+        props.acceptOrder(record)
     }
 
     return(
@@ -90,8 +96,8 @@ const mapDispatchToProps = (dispatch) => {
         fetchOrders: () => {
             dispatch(orderactions.onFetchOrders())
         },
-        acceptOrder: () => {
-            dispatch(orderactions.onUpdateOrder())
+        acceptOrder: (data) => {
+            dispatch(orderactions.onUpdateOrder(data))
         }
     }
 }

@@ -23,9 +23,10 @@ function* fetchOrders(action) {
 function* acceptOrder(action) {
     try {
         const { data, error } = yield call(
-            (data) => rf.getRequest('OrderRequest').acceptOrder(data), action.data
+            (data) => rf.getRequest('OrderRequest').acceptOrder(data), action.params
         );
         if (error.code === 200) {
+            yield put(actions.onFetchOrders());
             yield put(actions.onUpdateOrderSucceed({ data }));
         }
     } catch (err) {
