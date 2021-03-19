@@ -15,6 +15,7 @@ function SiderMenu(props) {
            <Menu.Item key='/discounts'><Link to='/discount'>Discounts</Link></Menu.Item>
            <Menu.Item key='/statistic'><Link to='/statistic'>Statistic</Link></Menu.Item>
            <Menu.Item key='/vendors'><Link to='/vendors'>Vendors</Link></Menu.Item>
+           <Menu.Item key='/sale'><Link to='/sale'>Sale Off</Link></Menu.Item>
         </Menu>
     );
 }

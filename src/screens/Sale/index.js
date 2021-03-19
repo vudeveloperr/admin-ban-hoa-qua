@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Table, Checkbox, Row, Col, Form, Input, Button, Modal, InputNumber  } from 'antd';
 import styled from 'styled-components';
-import discountactions from '../../redux/actions/discount'
+import saleactions from '../../redux/actions/sale'
 import moment from 'moment';
 
 const CenterWrapper = styled.div`
@@ -37,18 +37,18 @@ const tailLayout = {
     },
 };
 
-function Discounts(props) {
+function Sale(props) {
 
     const columns = [
         {
-            title: 'Rank',
-            dataIndex: 'rank',
-            key: 'rank',
+            title: 'Id',
+            dataIndex: 'id',
+            key: 'id',
         },
         {
-            title: 'Rate',
-            dataIndex: 'rate',
-            key: 'rate',
+            title: 'People',
+            dataIndex: 'name_admin',
+            key: 'name_admin',
         },
         {
             title: 'Time Create Discount',
@@ -57,8 +57,27 @@ function Discounts(props) {
                 moment.unix(record.last_up_date).format('dddd, MMMM Do, YYYY h:mm:ss A')
             )
         },
-        ,
         {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status'
+        },
+        {
+            title: 'Detail',
+            render: (text, record, index) => (
+                <ButtonWrapper
+                    onClick={() => {
+                        editClick(record);
+                        setRank(record.rank);
+                        setEditData(true);
+                    }}
+                >
+                    Edit
+                </ButtonWrapper>
+            )
+        },
+        {
+            title: 'Action',
             render: (text, record, index) => (
                 <ButtonWrapper
                     onClick={() => {
@@ -74,7 +93,7 @@ function Discounts(props) {
     ];
 
     useEffect(() => {
-        props.fetchDiscount()
+        props.fetchSale()
     }, [])
 
     const formUpdate = (values) => {
@@ -112,7 +131,6 @@ function Discounts(props) {
     }
 
 
-
     const hideModalADD = () => {
         setVisibleADD(false);
     }
@@ -129,15 +147,14 @@ function Discounts(props) {
 
     return (
         <div>
-            
             <div className="btn-discounts">
                 <Row className="">
-                    <Col span={20} className=''>
-                        Discounts
+                    <Col span={19} className=''>
+                        Sale Off
                     </Col>
-                    <Col span={4} className=''>
+                    <Col span={5} className=''>
                     <CenterWrapper>
-                        <Button className="btn-create-sale" onClick={addClick}>CREATE DISCOUNT</Button>
+                        <Button className="btn-create-sale" onClick={addClick}>CREATE SALE CAMPAIGN</Button>
                     </CenterWrapper>
                     </Col>
                 </Row>
@@ -181,30 +198,31 @@ function Discounts(props) {
                     </Modal>
                 </Spacing>
             </div>
-            <Table dataSource={props.discount} columns={columns} />
+            <Table dataSource={props.sale} columns={columns} />
         </div>
     )
 }
 
 
 const mapStateToProps = (state) => {
+    console.log("sale",state)
     return{
-        discount: state.discount.discount
+        sale: state.sale.sale
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return{
-        fetchDiscount: () => {
-            dispatch(discountactions.onFetchDiscount())
+        fetchSale: () => {
+            dispatch(saleactions.onFetchSales())
         },
-        updateDiscount: (data, callback) => {
-            dispatch(discountactions.onUpdateDiscount(data, callback))
+        updateSale: (data, callback) => {
+            dispatch(saleactions.onUpdateSale(data, callback))
         },
-        createDiscount: (data, callback) => {
-            dispatch(discountactions.onCreateDiscount(data, callback))
+        createSale: (data, callback) => {
+            dispatch(saleactions.onCreateSale(data, callback))
         }
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Discounts)
+export default connect(mapStateToProps, mapDispatchToProps)(Sale)
