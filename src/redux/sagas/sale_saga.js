@@ -36,14 +36,17 @@ function* createSale(action) {
     }
 }
 
-function* updateSale(action) {
+function* updateSales(action) {
+    console.log("action",action)
     try {
         const { data, error } = yield call(
-            (data) => rf.getRequest('SaleRequest').updateSale(data), action.data
+            (data) => rf.getRequest('SaleRequest').updateSale(data), action.data,
         );
         if (error.code === 200) {
             action.callback();
-            yield put(actions.onUpdateSaleSucceed({}));
+            yield put(actions.onUpdateSale());
+            yield put(actions.fetchSales());
+            yield put(actions.onUpdateSaleSucceed({data}));
         }
         else {
             yield put(actions.onUpdateSaleFailed(error.message));
@@ -54,11 +57,10 @@ function* updateSale(action) {
     }
 }
 
-
 function* watchSale() {
     yield takeLatest(FETCH_SALES, fetchListSales);
     yield takeLatest(CREATE_SALE, createSale);
-    yield takeLatest(UPDATE_SALE, updateSale);
+    yield takeLatest(UPDATE_SALE, updateSales);
 }
 
 export default function* rootSaga() {

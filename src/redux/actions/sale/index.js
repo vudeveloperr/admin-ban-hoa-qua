@@ -24,10 +24,9 @@ export default {
     type: FETCH_SALES_FAILED,
     err,
   }),
-  onUpdateSale: (data, callback) => ({
+  onUpdateSale: (params) => ({
     type: UPDATE_SALE,
-    data,
-    callback
+    params,
   }),
   onUpdateSaleSucceed: (data) => ({
     type: UPDATE_SALE_SUCCEED,

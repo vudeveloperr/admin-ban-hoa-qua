@@ -8,8 +8,9 @@ export default class OrderRequest extends BaseRequest {
         return this.get(url);
     }
     acceptOrder(params){
-        const url = `${prefix}/`;
-        return this.put(url,params);
+        console.log("order",params)
+        const url = `${prefix}/${params.id}`;
+        return this.put(url);
     }
 }
 

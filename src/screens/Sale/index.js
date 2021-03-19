@@ -60,50 +60,45 @@ function Sale(props) {
         {
             title: 'Status',
             dataIndex: 'status',
-            key: 'status'
+            key: 'status',
+            render: (text,record) => (
+                <div>
+                    {record.status ? <p>On</p> : <p>Off</p>}
+                </div>)
         },
         {
             title: 'Detail',
-            render: (text, record, index) => (
-                <ButtonWrapper
-                    onClick={() => {
-                        editClick(record);
-                        setRank(record.rank);
-                        setEditData(true);
-                    }}
-                >
-                    Edit
-                </ButtonWrapper>
-            )
+            dataIndex: 'detail',
+            render: (text,record) => (
+            <div>
+                {record.detail.map((item)=> (
+                    <>
+                        <p>- {item.name}</p>
+                        <p>Sale Price: {item.sale_price}</p>
+                    </>
+                ))}
+            </div>)
         },
         {
             title: 'Action',
             render: (text, record, index) => (
                 <ButtonWrapper
-                    onClick={() => {
-                        editClick(record);
-                        setRank(record.rank);
-                        setEditData(true);
-                    }}
+                    onClick={() => {editClick({id: record.id})}}
                 >
-                    Edit
+                    {record.status ? <p>Deactivate</p> : <p></p>}
                 </ButtonWrapper>
             )
         },
     ];
 
+    const editClick = (record) => {
+        props.updateSale(record)
+    }
+
     useEffect(() => {
         props.fetchSale()
     }, [])
 
-    const formUpdate = (values) => {
-        console.log("hiha :", values)
-		props.updateDiscount({ ...values, rank: rank}, 
-			() => { 
-				setVisible(false);
-				props.fetchDiscount();
-			});
-	}
     const formCreate = (values) => {
         props.createDiscount({ ...values},
             () => {
@@ -114,22 +109,8 @@ function Sale(props) {
 
     const [visible, setVisible] = useState(false);
     const [visibleADD, setVisibleADD] = useState(false);
-    const [ editData, setEditData ] = useState(0)
-    const [addDiscount, setAddDiscount] = useState(false);
-    const [rank, setRank] = useState(0);
+    
     let [form] = Form.useForm()
-
-    const modalOk = () => {
-        setVisible(false);
-    }
-    const modalCancel = () => {
-        setVisible(false);
-    }
-    const editClick = (record) => {
-        setVisible(true);
-        form.setFieldsValue(record);
-    }
-
 
     const hideModalADD = () => {
         setVisibleADD(false);
@@ -140,10 +121,8 @@ function Sale(props) {
 
     const addClick = (record) => {
         setVisibleADD(true);
-        setAddDiscount(true);
         form.resetFields();
     }
-
 
     return (
         <div>
@@ -180,22 +159,6 @@ function Sale(props) {
                             </Form.Item>
                         </Form>
                     </Modal>
-
-                    <Modal title="Detail Vendors" visible={visible} onOk={modalOk} onCancel={modalCancel}>
-                        <Form {...layout} form={form} onFinish={formUpdate} name="control-ref">
-                            <Form.Item name="rank" label="Rank" rules={[{ required: true }]}>
-                                <Input disabled/>
-                            </Form.Item>
-                            <Form.Item name="rate" label="Rate" rules={[{ required: true }]}>
-                                <InputNumber />
-                            </Form.Item>
-                            <Form.Item {...tailLayout}>
-                                <Button type="primary" htmlType="submit">
-                                    Submit
-                                </Button>
-                            </Form.Item>
-                        </Form>
-                    </Modal>
                 </Spacing>
             </div>
             <Table dataSource={props.sale} columns={columns} />
@@ -203,9 +166,7 @@ function Sale(props) {
     )
 }
 
-
 const mapStateToProps = (state) => {
-    console.log("sale",state)
     return{
         sale: state.sale.sale
     }
@@ -216,8 +177,8 @@ const mapDispatchToProps = (dispatch) => {
         fetchSale: () => {
             dispatch(saleactions.onFetchSales())
         },
-        updateSale: (data, callback) => {
-            dispatch(saleactions.onUpdateSale(data, callback))
+        updateSale: (data) => {
+            dispatch(saleactions.onUpdateSale(data))
         },
         createSale: (data, callback) => {
             dispatch(saleactions.onCreateSale(data, callback))

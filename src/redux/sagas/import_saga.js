@@ -1,6 +1,6 @@
 import { all, call, put, fork, takeLatest } from 'redux-saga/effects';
 
-import { FETCH_LIST_IMPORT, ADDITION_QUANTITY } from '../actions/import';
+import { FETCH_LIST_IMPORT, CREATE_IMPORT } from '../actions/import';
 import actions from '../actions/import';
 import rf from '../../requests/RequestFactory';
 
@@ -18,27 +18,27 @@ function* fetchListImport(action) {
     }
 }
 
-function* additionQuantity(action) {
+function* createImport(action) {
     try {
         const { data, error } = yield call(
-            (data) => rf.getRequest('ImportRequest').additionQuantity(data), action.data
+            (data) => rf.getRequest('ImportRequest').createImport(data), action.data
         );
         if (error.code === 200) {
             yield call(action.callback());
-            yield put(actions.onAdditionQuantity());
+            yield put(actions.onCreateImport());
         }
         else {
-            yield put(actions.onAdditionQuantityFailed(error.message));
+            yield put(actions.onCreateImportFailed(error.message));
         }
     } catch (err) {
         console.log("=======", err)
-        yield put(actions.onAdditionQuantityFailed(err));
+        yield put(actions.onCreateImportFailed(err));
     }
 }
 
 function* watchImport() {
     yield takeLatest(FETCH_LIST_IMPORT, fetchListImport);
-    yield takeLatest(ADDITION_QUANTITY, additionQuantity);
+    yield takeLatest(CREATE_IMPORT, createImport);
 }
 
 export default function* rootSaga() {

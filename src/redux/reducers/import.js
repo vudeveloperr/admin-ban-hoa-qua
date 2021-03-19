@@ -1,5 +1,5 @@
 import {
-    ADDITION_QUANTITY_SUCCEED,
+    CREATE_IMPORT_SUCCEED,
     FETCH_LIST_IMPORT_SUCCEED
 } from '../actions/import';
 
@@ -11,7 +11,7 @@ export default (
   action,
 ) => {
   switch (action.type) {
-    case ADDITION_QUANTITY_SUCCEED:{
+    case CREATE_IMPORT_SUCCEED:{
         return  {
             ...state,
             product: action.data.data,

@@ -16,13 +16,7 @@ export default (
           ...state,
           order: action.data.data,
       }
-    }
-    case UPDATE_ORDER_SUCCEED:{
-      return  {
-          ...state,
-          order: action.data.data,
-      }
-    }
+    } 
     default:
       return {
         ...state,

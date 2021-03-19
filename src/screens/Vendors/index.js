@@ -198,7 +198,6 @@ function Vendors(props){
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return{
         vendors: state.vendors.vendors
     }

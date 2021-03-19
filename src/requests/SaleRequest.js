@@ -12,9 +12,10 @@ export default class SaleRequest extends BaseRequest {
         const url = `${prefix}/`;
         return this.post(url,data); 
     }
-    updateSale(data){
-        const url = `${prefix}/`
-        return this.put(url,data);
+    updateSale(params){
+        console.log("param: ",params)
+        const url = `${prefix}/${params}`
+        return this.put(url);
     }
 
 }

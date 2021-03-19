@@ -4,7 +4,7 @@ const prefix = '/import'
 
 export default class ImportRequest extends BaseRequest {
     
-    addQuantity(data){
+    createImport(data){
         const url = `${prefix}`;
         return this.post(url,data); 
     }
