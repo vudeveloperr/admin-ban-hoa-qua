@@ -28,16 +28,13 @@ function* createCategory(action) {
             (data) => rf.getRequest('CategoryRequest').createCategory(data), action.data
         );
         if (error.code === 200) {
-            console.log("hi");
             yield call(action.callback());
             yield put(actions.onCreateCategory());
         }
         else {
-            console.log("ha");
             yield put(actions.onCreateCategoryFailed(error.message));
         }
     } catch (err) {
-        
         console.log("=======", err)
         yield put(actions.onCreateCategoryFailed(err));
     }

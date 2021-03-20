@@ -15,4 +15,8 @@ export default class ProductRequest extends BaseRequest {
         const url = `${prefix}/`
         return this.put(url,data);
     }
+    searchProduct(data){
+        const url = `${prefix}/search`;
+        return this.get(url,data);
+    }
 }

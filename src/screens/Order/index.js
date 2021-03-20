@@ -64,6 +64,8 @@ function Order(props) {
     {
       title: "Action",
       render: (text, record) => (
+        record.current_status !== "Done" 
+        ?
         <ButtonWrapper
           onClick={() => {
             detailClick({ id: record.id });
@@ -71,6 +73,7 @@ function Order(props) {
         >
           Accept
         </ButtonWrapper>
+        :<></>
       ),
     },
   ];

@@ -8,11 +8,11 @@ class CategoryRequest extends BaseRequest {
         return this.get(url)
     }
     createCategory(data){
-        const url = `${prefix}`;
+        const url = `${prefix}/`;
         return this.post(url,data); 
     }
     updateCategory(data){
-        const url = `${prefix}`
+        const url = `${prefix}/`
         return this.put(url,data);
     }
 }
