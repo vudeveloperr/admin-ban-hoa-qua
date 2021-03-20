@@ -1,6 +1,6 @@
 import { Layout } from 'antd';
 import { SiderMenu, CustomHeader } from '../';
-import { Home, Product, Order, Import, Discounts, UserControl, Statistic, Vendors, Sale} from '../../screens';
+import { Home, Product, Order, Import, Discounts, UserControl, Statistic, Vendors, Sale, Categoty} from '../../screens';
 import { Route } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -43,6 +43,7 @@ function Main(props) {
                     <ContentWrapper>
                         <Route exact path="/" component={Home} />
                         <Route exact path="/product" component={Product} />
+                        <Route exact path="/category" component={Categoty} />
                         <Route exact path="/order" component={Order} />
                         <Route exact path="/import" component={Import} />
                         <Route exact path="/discount" component={Discounts} />

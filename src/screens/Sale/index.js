@@ -118,7 +118,6 @@ function Sale(props) {
     const modalOkADD = () => {
         setVisibleADD(false);
     }
-
     const addClick = (record) => {
         setVisibleADD(true);
         form.resetFields();

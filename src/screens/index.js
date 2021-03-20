@@ -8,3 +8,4 @@ export {default as Discounts } from './Discounts';
 export { default as Statistic} from './Statistic';
 export {default as Vendors} from './Vendors';
 export {default as Sale} from './Sale';
+export {default as Categoty} from './Categoty';

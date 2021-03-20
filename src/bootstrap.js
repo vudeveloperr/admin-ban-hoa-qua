@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// window.base_url = 'http://192.168.0.105:8080/v1'
-window.base_url = 'http://localhost:8080/v1'
+window.base_url = 'http://192.168.0.103:8080/v1'
+// window.base_url = 'http://localhost:8080/v1'
 window.upload_url = 'http://192.168.0.105:8081'
 
 window.axios = axios.create({

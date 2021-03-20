@@ -7,6 +7,14 @@ class CategoryRequest extends BaseRequest {
         const url = `${prefix}/`
         return this.get(url)
     }
+    createCategory(data){
+        const url = `${prefix}`;
+        return this.post(url,data); 
+    }
+    updateCategory(data){
+        const url = `${prefix}`
+        return this.put(url,data);
+    }
 }
 
 export default CategoryRequest
