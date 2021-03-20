@@ -7,7 +7,7 @@ import ImportRequest from './ImportRequest';
 import VendorsRequest from './VendorsRequest';
 import DiscountRequest from './DiscountRequest';
 import SaleRequest from './SaleRequest';
-
+import StatisticRequest from './StatisticRequest';
 
 const requestMap = {
     CategoryRequest,
@@ -19,6 +19,7 @@ const requestMap = {
     VendorsRequest,
     DiscountRequest,
     SaleRequest,
+    StatisticRequest,
 };
 
 const instances = {};

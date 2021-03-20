@@ -8,6 +8,7 @@ import watchImport from './import_saga';
 import watchVendors from './vendors_saga';
 import watchDiscount from './discount_saga';
 import watchSale from './sale_saga';
+import watchStatistic from './statistic_saga';
 
 function* rootSaga() {
   yield all([
@@ -20,6 +21,7 @@ function* rootSaga() {
     watchVendors(),
     watchDiscount(),
     watchSale(),
+    watchStatistic(),
   ]);
 }
 

@@ -1,6 +1,6 @@
 import { Row, Col } from 'antd';
 
-export default function TotalRevenueToday() {
+export default function TotalRevenueToday(props) {
     return (
         <div>
             <div className="MuiPaper-root MuiPaper-elevation0 MuiCard-root jss414 MuiPaper-rounded">
@@ -8,7 +8,7 @@ export default function TotalRevenueToday() {
                     <Col span={8}>
                         <div className="MuiTypography-root jss555 MuiTypography-subtitle1">Sales</div>
                         <div className="MuiTypography-root jss554 MuiTypography-caption MuiTypography-colorTextSecondary">Today</div>
-                        <div className="MuiTypography-root jss558 MuiTypography-h4 MuiTypography-colorTextPrimary">$62.54</div>
+                        <div className="MuiTypography-root jss558 MuiTypography-h4 MuiTypography-colorTextPrimary">$ {props.totalrevenu}</div>
                     </Col>
                     <Col className="jss418" span={8}>
                         <svg className="MuiSvgIcon-root jss543 MuiSvgIcon-fontSizeInherit" focusable="false" viewBox="0 0 64 64" ariaHidden="true" role="presentation">

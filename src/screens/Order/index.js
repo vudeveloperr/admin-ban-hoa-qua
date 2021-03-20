@@ -48,7 +48,7 @@ function Order(props) {
       dataIndex: "number",
     },
     {
-      title: "Order",
+      title: "Detail",
       dataIndex: "detail",
       render: (text, record) => (
         <div>

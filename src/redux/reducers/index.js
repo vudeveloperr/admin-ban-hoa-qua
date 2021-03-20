@@ -8,6 +8,7 @@ import category from './category';
 import product from './product';
 import discount from './discount';
 import sale from './sale';
+import statistic from './statistic';
 
 const allReducers = combineReducers({
   category,
@@ -19,6 +20,7 @@ const allReducers = combineReducers({
   vendors,
   discount,
   sale,
+  statistic,
 });
 
 export default allReducers;

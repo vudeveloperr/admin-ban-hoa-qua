@@ -8,4 +8,3 @@ window.axios = axios.create({
     baseURL: window.base_url,
     headers: {token: window.localStorage.getItem('token')}
   });
-

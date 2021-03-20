@@ -1,6 +1,6 @@
 import { Row, Col } from 'antd';
 
-export default function TotalOrderToday() {
+export default function TotalOrderToday(props) {
     return (
         <div>
             <div className="MuiPaper-root MuiPaper-elevation0 MuiCard-root jss2179 MuiPaper-rounded">
@@ -8,7 +8,7 @@ export default function TotalOrderToday() {
                     <Col span={8}>
                         <div className="MuiTypography-root jss2181 MuiTypography-subtitle1">Orders</div>
                         <div className="MuiTypography-root jss2180 MuiTypography-caption MuiTypography-colorTextSecondary">Today</div>
-                        <div className="MuiTypography-root jss2184 MuiTypography-h4 MuiTypography-colorTextPrimary">1</div>
+                        <div className="MuiTypography-root jss2184 MuiTypography-h4 MuiTypography-colorTextPrimary">{props.totalorder}</div>
                     </Col>
                     
                     <Col className="jss418" span={8}>

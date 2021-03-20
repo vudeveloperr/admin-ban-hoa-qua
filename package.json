@@ -12,6 +12,7 @@
     "customize-cra": "^1.0.0",
     "less": "^4.1.0",
     "less-loader": "^7.3.0",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-app-rewire-less": "^2.1.3",
