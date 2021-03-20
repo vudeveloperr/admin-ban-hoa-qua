@@ -25,7 +25,6 @@ function* createImport(action) {
         );
         if (error.code === 200) {
             yield call(action.callback());
-            yield put(actions.onCreateImport());
         }
         else {
             yield put(actions.onCreateImportFailed(error.message));
