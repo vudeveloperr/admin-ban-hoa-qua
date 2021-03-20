@@ -1,34 +1,33 @@
 import {
-    FETCH_CATEGORY_SUCCEED,
-    UPDATE_CATEGORY_SUCCEED,
-    CREATE_CATEGORY_SUCCEED,
-} from '../actions/category';
-
+  FETCH_CATEGORY_SUCCEED,
+  UPDATE_CATEGORY_SUCCEED,
+  CREATE_CATEGORY_SUCCEED,
+} from "../actions/category";
 
 export default (
   state = {
-    category:[],
+    category: [],
   },
-  action,
+  action
 ) => {
   switch (action.type) {
-    case FETCH_CATEGORY_SUCCEED:{
-        return  {
-            ...state,
-            category: action.data,
-        }
+    case FETCH_CATEGORY_SUCCEED: {
+      return {
+        ...state,
+        category: action.data,
+      };
     }
-    case UPDATE_CATEGORY_SUCCEED:{
-      return  {
-          ...state,
-          category: action.data.data,
-      }
+    case UPDATE_CATEGORY_SUCCEED: {
+      return {
+        ...state,
+        category: action.data.data,
+      };
     }
-    case CREATE_CATEGORY_SUCCEED:{
-      return  {
-          ...state,
-          category: action.data.data,
-      }
+    case CREATE_CATEGORY_SUCCEED: {
+      return {
+        ...state,
+        category: action.data.data,
+      };
     }
     default:
       return {

@@ -78,7 +78,6 @@ function Discounts(props) {
     }, [])
 
     const formUpdate = (values) => {
-        console.log("hiha :", values)
 		props.updateDiscount({ ...values, rank: rank}, 
 			() => { 
 				setVisible(false);

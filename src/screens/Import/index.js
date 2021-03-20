@@ -10,15 +10,17 @@ import {
   Table,
   Modal,
   Select,
+  Spin,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import _ from "lodash";
 import styled from "styled-components";
 import { ImportForm } from "./components";
 import moment from "moment";
 import { connect } from "react-redux";
 import importactions from "../../redux/actions/import";
 import vendoractions from "../../redux/actions/vendors";
-import productactions from '../../redux/actions/product';
+import productactions from "../../redux/actions/product";
 
 const { Option } = Select;
 
@@ -27,6 +29,10 @@ const ButtonWrapper = styled.div`
   &:hover {
     cursor: pointer;
   }
+`;
+
+const Center = styled.div`
+  text-align: center;
 `;
 
 const layout = {
@@ -55,7 +61,6 @@ const props = {
   },
   onChange(info) {
     if (info.file.status !== "uploading") {
-      console.log(info.file, info.fileList);
     }
     if (info.file.status === "done") {
       message.success(`${info.file.name} file uploaded successfully`);
@@ -73,19 +78,11 @@ function Import(props) {
   }, []);
 
   const [modalVisble, setModalVisible] = useState(false);
-  const [showDetail] = useState(false);
-  let [form] = Form.useForm()
+  let [form] = Form.useForm();
 
   const formCreate = (values) => {
-    console.log("hihi",values)
-    delete values[""]
-    
-
-    // props.createImport({ ...values},
-    //     () => {
-    //         props.fetchImport();
-    //     });
-}
+    delete values[""];
+  };
 
   const columns = [
     {
@@ -148,6 +145,13 @@ function Import(props) {
   const modalCancel = () => {
     setModalVisible(false);
   };
+
+  const handleSearch = _.debounce((value) => {
+    if (value.length > 0) {
+      props.searchProduct({ word: value });
+    }
+  }, 1000);
+
   return (
     <div>
       Import
@@ -166,8 +170,17 @@ function Import(props) {
         </TabPane>
 
         <TabPane tab="Import Quantity Product" key="2">
-          <Form {...layout} form={form} onFinish={formCreate} name="control-ref">
-            <Form.Item name="vendor_id" label="Vendors" rules={[{ required: true }]}>
+          <Form
+            {...layout}
+            form={form}
+            onFinish={formCreate}
+            initialValues={{ price: 1.0, unit: "kg", quantity: 1 }}
+          >
+            <Form.Item
+              name="vendor_id"
+              label="Vendors"
+              rules={[{ required: true }]}
+            >
               <Select>
                 {props.vendors.map((item) => (
                   <Option key={parseInt(item.id)} value={parseInt(item.id)}>
@@ -176,9 +189,23 @@ function Import(props) {
                 ))}
               </Select>
             </Form.Item>
-            <Form.Item name="product_id" label="Product" rules={[{ required: true }]}>
-              <Select>
-                {props.product.map((item) => (
+            <Form.Item
+              name="product_id"
+              label="Product"
+              rules={[{ required: true }]}
+            >
+              <Select
+                showSearch
+                showArrow={false}
+                onSearch={handleSearch}
+                notFoundContent={
+                  <Center>
+                    <Spin />
+                  </Center>
+                }
+                filterOption={false}
+              >
+                {props.search.map((item) => (
                   <Option key={parseInt(item.id)} value={parseInt(item.id)}>
                     {item.name}
                   </Option>
@@ -202,7 +229,7 @@ function Import(props) {
               />
             </Form.Item>
             <Form.Item name="unit" label="Unit" rules={[{ required: true }]}>
-              <Select defaultValue="kg" style={{ width: 120 }}>
+              <Select style={{ width: 120 }}>
                 <Option value="g">gram</Option>
                 <Option value="kg">kg</Option>
                 <Option value="ton">ton</Option>
@@ -210,12 +237,14 @@ function Import(props) {
                 <Option value="ounce">ounce</Option>
               </Select>
             </Form.Item>
-            <Form.Item name="quantity" label="Quantity" rules={[{ required: true }]}>
-              <InputNumber defaultValue="1"
-                min="1"
-                max="100"/>
+            <Form.Item
+              name="quantity"
+              label="Quantity"
+              rules={[{ required: true }]}
+            >
+              <InputNumber min="1" max="100" />
             </Form.Item>
-            
+
             <Form.Item {...tailLayout}>
               <Button type="primary" htmlType="submit">
                 Submit
@@ -223,9 +252,6 @@ function Import(props) {
             </Form.Item>
           </Form>
         </TabPane>
-        {/* <TabPane tab="Add Quantity" key="3">
-          <ImportForm />
-        </TabPane> */}
       </Tabs>
     </div>
   );
@@ -236,14 +262,15 @@ const mapStateToProps = (state) => {
     import: state.imports.product,
     vendors: state.vendors.vendors,
     product: state.product.product,
+    search: state.product.search,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchProducts: (params, callback) => {
-			dispatch(productactions.onFetchProducts(params, callback))
-		},
+      dispatch(productactions.onFetchProducts(params, callback));
+    },
     fetchImport: () => {
       dispatch(importactions.onFetchImport());
     },
@@ -252,6 +279,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     fetchVendors: () => {
       dispatch(vendoractions.onFetchVendors());
+    },
+    searchProduct: (data) => {
+      dispatch(productactions.onSearchProduct(data));
     },
   };
 };

@@ -14,6 +14,9 @@ export const FETCH_TOP_SALE = 'FETCH_TOP_SALE'
 export const FETCH_TOP_SALE_SUCCEED = 'FETCH_TOP_SALE_SUCCEED'
 export const FETCH_TOP_SALE_FAILED = 'FETCH_TOP_SALE_FAILED'
 
+export const FETCH_EXPORT_ORDER = 'FETCH_EXPORT_ORDER'
+export const FETCH_EXPORT_ORDER_SUCCEED = 'FETCH_EXPORT_ORDER_SUCCEED'
+export const FETCH_EXPORT_ORDER_FAILED = 'FETCH_EXPORT_ORDER_FAILED'
 
 export default {
   onFetchTotalAcc: (params, callback) =>  ({
@@ -66,6 +69,19 @@ export default {
   }),
   onFetchTopSaleFailed: (err) => ({
     type: FETCH_TOP_SALE_FAILED,
+    err,
+  }),
+  onFetchExportOrder: (params, callback) =>  ({
+    type: FETCH_EXPORT_ORDER,
+    params, 
+    callback
+  }),
+  onFetchExportOrderSucceed: (data) => ({
+    type: FETCH_EXPORT_ORDER_SUCCEED,
+    data,
+  }),
+  onFetchExportOrderFailed: (err) => ({
+    type: FETCH_EXPORT_ORDER_FAILED,
     err,
   }),
   

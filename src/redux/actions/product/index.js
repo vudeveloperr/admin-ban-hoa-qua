@@ -10,6 +10,10 @@ export const UPDATE_PRODUCT = 'UPDATE_PRODUCT'
 export const UPDATE_PRODUCT_SUCCEED = 'UPDATE_PRODUCT_SUCCEED'
 export const UPDATE_PRODUCT_FAILED = 'UPDATE_PRODUCT_FAILED'
 
+export const SEARCH_PRODUCT = 'SEARCH_PRODUCT'
+export const SEARCH_PRODUCT_SUCCEED = 'SEARCH_PRODUCT_SUCCEED'
+export const SEARCH_PRODUCT_FAILED = 'SEARCH_PRODUCT_FAILED'
+
 export default {
   onFetchProducts: (params, callback) =>  ({
     type: FETCH_PRODUCTS,
@@ -48,6 +52,18 @@ export default {
   }),
   onCreateProductFailed: (err) => ({
       type: CREATE_PRODUCT_FAILED,
+      err
+  }),
+  onSearchProduct: (data) => ({
+    type:SEARCH_PRODUCT,
+    data,
+  }),
+  onSearchProductSuccess: (data) =>({
+      type:SEARCH_PRODUCT_SUCCEED,
+      data
+  }),
+  onSearchProductFailed: (err) => ({
+      type:SEARCH_PRODUCT_FAILED,
       err
   })
 };

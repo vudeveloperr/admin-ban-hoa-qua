@@ -1,6 +1,6 @@
 import { Row, Col } from 'antd';
 
-export default function TotalAccount() {
+export default function TotalAccount(props) {
     return (
         <div>
             <div className="MuiPaper-root MuiPaper-elevation0 MuiCard-root jss2179 MuiPaper-rounded">
@@ -8,7 +8,7 @@ export default function TotalAccount() {
                     <Col span={8}>
                         <div className="MuiTypography-root jss2181 MuiTypography-subtitle1">Total Account</div>
                         <div className="MuiTypography-root jss2180 MuiTypography-caption MuiTypography-colorTextSecondary">Currently</div>
-                        <div className="MuiTypography-root jss2184 MuiTypography-h4 MuiTypography-colorTextPrimary">160</div>
+                        <div className="MuiTypography-root jss2184 MuiTypography-h4 MuiTypography-colorTextPrimary">{props.totalacc}</div>
                     </Col>
                     
                     <Col className="jss418" span={8}>

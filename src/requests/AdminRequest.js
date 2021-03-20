@@ -1,12 +1,12 @@
-import BaseRequest from './BaseRequest';
+import BaseRequest from "./BaseRequest";
 
-const schema = 'admin'
+const schema = "admin";
 
-class AdminRequest extends BaseRequest{
-    fetchAdmin() {
-        const url = `${schema}/`
-        return this.get(url)
-    }
+class AdminRequest extends BaseRequest {
+  fetchAdmin() {
+    const url = `${schema}/`;
+    return this.get(url);
+  }
 }
 
-export default AdminRequest
+export default AdminRequest;

@@ -11,7 +11,6 @@ function Home(props) {
             props.fetchTotalOrder()
             props.fetchTopSale()
 		}, [])
-    console.log("haha", props)
     return (
         <div>
             Home
@@ -34,7 +33,6 @@ function Home(props) {
     )
 }
 const mapStateToProps = (state) => {
-    console.log(state)
 	return {
         totalrevenu: state.statistic.totalrevenu,
         totalorder: state.statistic.totalorder,

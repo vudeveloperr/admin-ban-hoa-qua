@@ -2,7 +2,7 @@ import {
     all, call, put,fork ,takeLatest,
 } from 'redux-saga/effects';
 
-import actions,{ FETCH_PRODUCTS, CREATE_PRODUCT, UPDATE_PRODUCT } from '../actions/product';
+import actions,{ FETCH_PRODUCTS, CREATE_PRODUCT, UPDATE_PRODUCT, SEARCH_PRODUCT } from '../actions/product';
 import rf from '../../requests/RequestFactory';
 
 function* fetchProducts(action) {
@@ -55,10 +55,29 @@ function* updateProduct(action) {
     }
 }
 
+function* searchProduct(action){
+    try{
+        yield put(actions.onSearchProductSuccess([]));
+        const { data, error } = yield call(
+            (data) => rf.getRequest('ProductRequest').searchProduct(data), action.data
+        );
+        if (error.code === 200) {
+            yield put(actions.onSearchProductSuccess(data));
+        }
+        else {
+            yield put(actions.onSearchProductFailed(error.message));
+        }
+    } catch (err){
+        yield put(actions.onSearchProductFailed(err));
+    }
+}
+
+
 function* watchProduct() {
     yield takeLatest(FETCH_PRODUCTS, fetchProducts);
     yield takeLatest(CREATE_PRODUCT, createProduct);
     yield takeLatest(UPDATE_PRODUCT, updateProduct);
+    yield takeLatest(SEARCH_PRODUCT, searchProduct);
 }
 
 export default function* rootSaga() {
