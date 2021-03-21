@@ -57,7 +57,6 @@ function* updateProduct(action) {
 
 function* searchProduct(action){
     try{
-        yield put(actions.onSearchProductSuccess([]));
         const { data, error } = yield call(
             (data) => rf.getRequest('ProductRequest').searchProduct(data), action.data
         );

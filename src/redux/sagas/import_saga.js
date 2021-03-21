@@ -5,36 +5,38 @@ import actions from "../actions/import";
 import rf from "../../requests/RequestFactory";
 
 function* fetchListImport(action) {
-  try {
-    const { data, error } = yield call(
-      (data) => rf.getRequest("ImportRequest").fetchImport(),
-      action.params
-    );
-    // if (resp.code === 200) {
-    yield put(actions.onFetchImportSucceed({ data }));
-    // }
-  } catch (err) {
-    console.log("=======", err);
-    yield put(actions.onFetchImportFailed(err));
-  }
+    try {
+        const {data, error} = yield call(
+            (data) => rf.getRequest('ImportRequest').fetchImport(), action.params
+        );
+         if (error.code === 200) {
+            yield put(actions.onFetchImportSucceed({data}));
+         }
+         else {
+            window.custom_history.push("/login");
+         }
+    } catch (err) {
+        console.log("=======", err)
+        yield put(actions.onFetchImportFailed(err));
+    }
 }
 
 function* createImport(action) {
-  try {
-    const { data, error } = yield call(
-      (data) => rf.getRequest("ImportRequest").createImport(data),
-      action.data
-    );
-    if (error.code === 200) {
-      yield call(action.callback());
-      yield put(actions.onCreateImport());
-    } else {
-      yield put(actions.onCreateImportFailed(error.message));
+    try {
+        const { data, error } = yield call(
+            (data) => rf.getRequest('ImportRequest').createImport(data), action.data
+        );
+        if (error.code === 200) {
+            yield call(action.callback());
+        }
+        else {
+            window.custom_history.push("/login");
+            yield put(actions.onCreateImportFailed(error.message));
+        }
+    } catch (err) {
+        console.log("=======", err)
+        yield put(actions.onCreateImportFailed(err));
     }
-  } catch (err) {
-    console.log("=======", err);
-    yield put(actions.onCreateImportFailed(err));
-  }
 }
 
 function* watchImport() {
