@@ -18,6 +18,10 @@ export const FETCH_EXPORT_ORDER = 'FETCH_EXPORT_ORDER'
 export const FETCH_EXPORT_ORDER_SUCCEED = 'FETCH_EXPORT_ORDER_SUCCEED'
 export const FETCH_EXPORT_ORDER_FAILED = 'FETCH_EXPORT_ORDER_FAILED'
 
+export const FETCH_IMPORT = 'FETCH_IMPORT'
+export const FETCH_IMPORT_SUCCEED = 'FETCH_IMPORT_SUCCEED'
+export const FETCH_IMPORT_FAILED = 'FETCH_IMPORT_FAILED'
+
 export default {
   onFetchTotalAcc: (params, callback) =>  ({
     type: FETCH_TOTAL_ACC,
@@ -84,5 +88,17 @@ export default {
     type: FETCH_EXPORT_ORDER_FAILED,
     err,
   }),
-  
+  onFetchImport: (params, callback) =>  ({
+    type: FETCH_IMPORT,
+    params, 
+    callback
+  }),
+  onFetchImportSucceed: (data) => ({
+    type: FETCH_IMPORT_SUCCEED,
+    data,
+  }),
+  onFetchImportFailed: (err) => ({
+    type: FETCH_IMPORT_FAILED,
+    err,
+  }),
 };

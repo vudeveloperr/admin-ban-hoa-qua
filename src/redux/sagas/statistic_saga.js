@@ -6,6 +6,8 @@ import {
   FETCH_TOTAL_REVENU,
   FETCH_TOP_SALE,
   FETCH_EXPORT_ORDER,
+  FETCH_IMPORT,
+
 } from "../actions/statistic";
 import actions from "../actions/statistic";
 import rf from "../../requests/RequestFactory";
@@ -85,12 +87,28 @@ function* fetchExportOrder(action) {
   }
 }
 
+function* fetchImport(action) {
+  try {
+    console.log(action.params)
+    yield call(
+      (data) => rf.getRequest("StatisticRequest").fetchImport(data),
+      action.params
+    );
+
+    // }
+  } catch (err) {
+    console.log("=======", err);
+    yield put(actions.onFetchImportFailed(err));
+  }
+}
+
 function* watchVendors() {
   yield takeLatest(FETCH_TOTAL_ACC, fetchTotalAcc);
   yield takeLatest(FETCH_TOTAL_ORDER, fetchTotalOrder);
   yield takeLatest(FETCH_TOTAL_REVENU, fetchTotalRevenu);
   yield takeLatest(FETCH_TOP_SALE, fetchTopSale);
   yield takeLatest(FETCH_EXPORT_ORDER, fetchExportOrder);
+  yield takeLatest(FETCH_IMPORT, fetchImport);
 }
 
 export default function* rootSaga() {

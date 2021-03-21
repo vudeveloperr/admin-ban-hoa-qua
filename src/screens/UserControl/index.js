@@ -17,15 +17,16 @@ function UserControl(props) {
       <hr />
       <Row className="jss859">
         <Col span={8} className="TotalRevenueToday">
-          <NewAccountInMonth />
+          {/* <NewAccountInMonth /> */}
+          <TotalAccount totalacc={props.totalacc} />
         </Col>
         <Col span={8} className="TotalOrderToday">
-          <TotalAccount totalacc={props.totalacc} />
+          
         </Col>
         <Col span={8} className=""></Col>
       </Row>
       <div>
-        <Account account={props.admin} />
+        <Account account={props.admin} update ={props.updateAdmin}/>
       </div>
     </div>
   );
@@ -46,6 +47,9 @@ const mapDispatchToProps = (dispatch) => {
     fetchTotalAcc: (params, callback) => {
       dispatch(statisticactions.onFetchTotalAcc(params, callback));
     },
+    updateAdmin: (data, callback) => {
+			dispatch(actions.updateAdmin(data, callback))
+		},
   };
 };
 

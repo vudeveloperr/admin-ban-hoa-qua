@@ -1,4 +1,19 @@
 import { Table } from 'antd';
+import React, { useState } from 'react'
+import styled from 'styled-components';
+import actions from "../../../../redux/actions/admin";
+import { connect } from "react-redux";
+
+const ButtonWrapper = styled.div`
+    color: #1890ff;
+    &:hover{
+        cursor: pointer;
+    }
+`
+
+function Account(props) {
+
+  const [id, setId] = useState(0);
 
   const columns = [
     {
@@ -32,9 +47,25 @@ import { Table } from 'antd';
       dataIndex: 'gender',
       key: 'gender',
     },
+    {
+			render: (text, record, index) => (
+				<ButtonWrapper
+					onClick={() => {
+						editClick(record);
+						setId(record.id);
+					}}
+				>
+					Deactivate
+				</ButtonWrapper>
+			)
+		},
   ];
-  
-export default function Account(props) {
+
+  const editClick = (record) => {
+    console.log(record)
+    props.updateAdmin(record)
+  }
+
     return (
       
         <div className='jss736'>
@@ -44,3 +75,18 @@ export default function Account(props) {
         </div>
     )
 }
+
+const mapStateToProps = (state) => {
+  return {
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    updateAdmin: (data, callback) => {
+			dispatch(actions.updateAdmin(data, callback))
+		},
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Account)

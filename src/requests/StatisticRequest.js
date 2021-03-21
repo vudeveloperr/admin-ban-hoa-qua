@@ -24,5 +24,9 @@ export default class StatisticRequest extends BaseRequest {
         const url = `${prefix}/ex-order`;
         return this.download(url,params);
     }
+    fetchImport(params){
+        const url = `${prefix}/ex-import`;
+        return this.download(url,params);
+    }
 
 }

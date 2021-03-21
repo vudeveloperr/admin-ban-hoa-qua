@@ -1,4 +1,4 @@
-import { FETCH_ADMIN, FETCH_ADMIN_SUCCEED } from "../actions/admin";
+import { FETCH_ADMIN, FETCH_ADMIN_SUCCEED, UPDATE_ADMIN_SUCCEED } from "../actions/admin";
 
 export default (
   state = {
@@ -8,6 +8,12 @@ export default (
 ) => {
   switch (action.type) {
     case FETCH_ADMIN_SUCCEED: {
+      return {
+        ...state,
+        account: action.data.data,
+      };
+    }
+    case UPDATE_ADMIN_SUCCEED: {
       return {
         ...state,
         account: action.data.data,
