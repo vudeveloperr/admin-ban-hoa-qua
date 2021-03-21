@@ -22,6 +22,16 @@ const dataSource = [
       key: 'name',
     },
     {
+      title: 'Category',
+      dataIndex: 'unit',
+      key: 'unit',
+    },
+    {
+      title: 'Unit',
+      dataIndex: 'unit',
+      key: 'unit',
+    },
+    {
       title: 'Remaining',
       dataIndex: 'remaining',
       key: 'remaining',

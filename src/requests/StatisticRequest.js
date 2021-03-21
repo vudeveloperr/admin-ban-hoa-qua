@@ -20,9 +20,9 @@ export default class StatisticRequest extends BaseRequest {
         const url = `${prefix}/total-top-sale`;
         return this.get(url);
     }
-    fetchExportOrder(){
+    fetchExportOrder(params){
         const url = `${prefix}/ex-order`;
-        return this.get(url);
+        return this.download(url,params);
     }
 
 }

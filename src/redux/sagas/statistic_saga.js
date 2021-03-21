@@ -72,12 +72,12 @@ function* fetchTopSale(action) {
 
 function* fetchExportOrder(action) {
   try {
-    const { data, error } = yield call(
-      (data) => rf.getRequest("StatisticRequest").fetchExportOrder(),
+    console.log(action.params)
+    yield call(
+      (data) => rf.getRequest("StatisticRequest").fetchExportOrder(data),
       action.params
     );
-    // if (resp.code === 200) {
-    yield put(actions.onFetchExportOrderSucceed({ data }));
+
     // }
   } catch (err) {
     console.log("=======", err);

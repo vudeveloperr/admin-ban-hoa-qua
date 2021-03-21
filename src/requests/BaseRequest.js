@@ -27,8 +27,26 @@ class BaseRequest {
 
   async del(url, params = {}) {
     try {
-      const response = await window.axios.delete(`${url}`, params);
+      const response = await window.axios.delete(`${url}`, {params});
       return this._responseHandler(response);
+    } catch (error) {
+      this._errorHandler(error);
+    }
+  }
+
+  async download(url, params = {}) {
+    try {
+      console.log(params)
+      const response = await window.axios.get(`${url}`, {params,responseType: 'blob'},);
+      const headerval = response.headers['content-disposition'];
+      var filename = headerval.split(';')[1].split('=')[1].replace('"', '').replace('"', '');
+      const downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
+				const link = document.createElement('a');
+				link.href = downloadUrl;
+				link.setAttribute('download', filename); //any other extension
+				document.body.appendChild(link);
+				link.click();
+				link.remove();
     } catch (error) {
       this._errorHandler(error);
     }
