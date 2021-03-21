@@ -9,9 +9,12 @@ function* fetchListImport(action) {
         const {data, error} = yield call(
             (data) => rf.getRequest('ImportRequest').fetchImport(), action.params
         );
-        // if (resp.code === 200) {
+         if (error.code === 200) {
             yield put(actions.onFetchImportSucceed({data}));
-        // }
+         }
+         else {
+            window.custom_history.push("/login");
+         }
     } catch (err) {
         console.log("=======", err)
         yield put(actions.onFetchImportFailed(err));
@@ -27,6 +30,7 @@ function* createImport(action) {
             yield call(action.callback());
         }
         else {
+            window.custom_history.push("/login");
             yield put(actions.onCreateImportFailed(error.message));
         }
     } catch (err) {

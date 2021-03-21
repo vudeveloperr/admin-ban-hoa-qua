@@ -45,7 +45,7 @@ class BaseRequest {
 
     _errorHandler(err) {
         if (err.response && err.response.status === 401) {
-          window.location.href = '/';
+          window.custom_history.push("/login");
         }
         throw err;
       }

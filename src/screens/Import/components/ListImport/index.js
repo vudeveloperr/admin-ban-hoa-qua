@@ -95,7 +95,7 @@ function ListImport(props) {
           {record.detail.map((item) => (
             <>
               <p>
-                {item.name} | Unit: {item.unit}
+                {item.name}
               </p>
               <p>
                 Quantity: {item.quantity}, Price: {item.price} $
