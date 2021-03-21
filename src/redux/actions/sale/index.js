@@ -36,10 +36,9 @@ export default {
     type: UPDATE_SALE_FAILED,
     err
   }),
-  onCreateSale: (data,callback) => ({
+  onCreateSale: (data) => ({
     type:CREATE_SALE,
-    data,
-    callback
+    data
   }),
   onCreateSaleSuccess: (data) =>({
       type: CREATE_SALE_SUCCEED,

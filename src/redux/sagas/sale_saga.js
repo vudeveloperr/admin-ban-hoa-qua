@@ -10,9 +10,9 @@ function* fetchListSales(action) {
       (data) => rf.getRequest("SaleRequest").fetchSales(),
       action.params
     );
-    // if (resp.code === 200) {
+     if (error.code === 200) {
     yield put(actions.onFetchSalesSucceed({ data }));
-    // }
+     }
   } catch (err) {
     console.log("=======", err);
     yield put(actions.onFetchSalesFailed(err));
@@ -26,11 +26,8 @@ function* createSale(action) {
       action.data
     );
     if (error.code === 200) {
-      yield call(action.callback());
-      yield put(actions.createSale());
-    } else {
-      yield put(actions.onCreateSaleFailed(error.message));
-    }
+      yield put(actions.onFetchSales());
+    } 
   } catch (err) {
     console.log("=======", err);
     yield put(actions.onCreateSaleFailed(err));
