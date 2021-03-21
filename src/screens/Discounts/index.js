@@ -152,6 +152,9 @@ function Discounts(props) {
                             <Form.Item name="rank" label="Rank" rules={[{ required: true }]}>
                                 <InputNumber min={1} max={10} defaultValue={1}/>
                             </Form.Item>
+                            <Form.Item name="accumulate" label="Accumulate" rules={[{ required: true }]}>
+                                <InputNumber min={1} />
+                            </Form.Item>
                             <Form.Item name="rate" label="Rate" rules={[{ required: true }]}>
                                 <InputNumber min={1} max={10} defaultValue={1}/>
                             </Form.Item>
